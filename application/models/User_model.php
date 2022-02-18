@@ -4,6 +4,7 @@ class User_model extends CI_Model
 {
 	public function getUsers()
     {
+		$this->db->where('role_id !=', 1);
         return $this->db->get('user')->result();
     }
 

@@ -10,6 +10,7 @@ class User extends CI_Controller {
 		$this->load->model('User_model','user_m');
 		$this->load->model('Login_model','login_m');
 		is_logged_in();
+		check_access();
 	}
 	
 	public function index()
@@ -37,7 +38,7 @@ class User extends CI_Controller {
 				'email' => htmlspecialchars($this->input->post('email',true)),
 				'image' => 'default.jpg',
 				'password' => password_hash($this->input->post('pass'), PASSWORD_DEFAULT),
-				'role_id' => 2,
+				'role_id' =>  $this->input->post('role') ?? 3,
 				'is_active' => 1, // type 0 if you want to activate send email
 				'date_created' => time()
 			];

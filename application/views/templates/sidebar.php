@@ -25,12 +25,6 @@
 
     <li class="nav-item">
       <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
-        <i class="fas fa-fw fa-truck"></i>
-        <span>Suppliers</span></a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
         <i class="fas fa-fw fa-users"></i>
         <span>Customers</span></a>
     </li>
@@ -63,7 +57,7 @@
       </div>
     </li>
 
-    <?php if($this->session->userdata('role_id') == 1) { ?>
+    <?php if($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 2) { ?>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-edit"></i>
@@ -79,10 +73,16 @@
       </li>
 
       <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('user'); ?>">
-        <i class="fas fa-fw fa-user"></i>
-        <span>User</span></a>
-    </li>
+        <a class="nav-link" href="<?= base_url('supplier'); ?>">
+          <i class="fas fa-fw fa-truck"></i>
+          <span>Suppliers</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('user'); ?>">
+          <i class="fas fa-fw fa-user"></i>
+          <span>User</span></a>
+      </li>
     <?php } ?>
 
     <!-- Divider -->

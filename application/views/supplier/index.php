@@ -14,7 +14,7 @@
       </div>
       <div class="col-lg-6 text-right">
         <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newUserModal">
-          <i class="fa fa-user-plus"></i>  Tambah User
+          <i class="fa fa-user-plus"></i>  Tambah Supplier
         </a>
       </div>
     </div>
@@ -30,28 +30,30 @@
               <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Email</th>
-                <th>Status</th>
+                <th>Telepon</th>
+                <th>Alamat</th>
+                <th>Deskripsi</th>
                 <th>Aksi</th>
             </thead>
             <tbody>
     				<?php
     					$i = 1; 
-    					foreach($users as $us){ 
+    					foreach($suppliers as $sup){ 
 					  ?>
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
-    						<td><?= $us->name; ?></td>
-    						<td><?= $us->email; ?></td>
-    						<td><?= $us->is_active == 1 ? "Aktif" : "Tidak Aktif";  ?></td>
+    						<td><?= $sup->name; ?></td>
+    						<td><?= $sup->phone; ?></td>
+    						<td><?= $sup->address; ?></td>
+    						<td><?= $sup->description; ?></td>
     						<td>
                   <div class="row">
                     <div class="col-md-2">
-                      <a href="<?= base_url('user/edit/'.$us->id); ?>" class="badge badge-success">Edit</a>
+                      <a href="<?= base_url('supplier/edit/'.$sup->id); ?>" class="badge badge-success">Edit</a>
                     </div>
                     <div class="col-md-6">
-                      <form action="<?= site_url('user/delete')?>" method="post">
-                        <input type="hidden" name="user_id" value="<?= $us->id?>">
+                      <form action="<?= site_url('supplier/delete')?>" method="post">
+                        <input type="hidden" name="supplier_id" value="<?= $sup->id?>">
                         <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
                       </form>
                     </div>
@@ -75,44 +77,28 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="newMenuModalLabel">Tambah User</h5>
+				<h5 class="modal-title" id="newMenuModalLabel">Tambah Supplier</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"></span>
 				</button>
 			</div>
-			<form action="<?= base_url('user'); ?>" method="post">
+			<form action="<?= base_url('supplier'); ?>" method="post">
 				<div class="modal-body">
 					<div class="form-group">
-            <label>Nama: </label>
+            			<label>Nama: </label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Input Nama">
 					</div>
-          <div class="form-group">
-            <label>Email: </label>
-						<input type="text" class="form-control" id="email" name="email" placeholder="Input Email">
+					<div class="form-group">
+						<label>Telepon: </label>
+						<input type="text" class="form-control" id="telepon" name="telepon" placeholder="Input No Telepon">
 					</div>
-          <div class="form-group">
-            <label>Password: </label>
-						<input type="password" class="form-control" id="pass" name="pass">
+          			<div class="form-group">
+           		 		<label>Alamat: </label>
+						<textarea class="form-control" id="address" name="address">Input Alamat</textarea> 
 					</div>
-          <div class="form-group">
-            <label>Confirm Password: </label>
-						<input type="password" class="form-control" id="confpass" name="confpass">
-					</div>
-          <?php if($this->session->userdata('role_id') == 1) { ?>
-            <div class="form-group">
-              <label>Role: </label>
-              <select name="role" id="role" class="form-control">
-                <option value="2">Admin</option>
-                <option value="3">User</option>
-              </select>
-            </div>
-          <?php } ?>
-          <div class="form-group">
-            <label>Status: </label>
-            <select name="status" id="status" class="form-control">
-              <option value="1">Aktif</option>
-              <option value="2">Tidak Aktif</option>
-            </select>
+					<div class="form-group">
+           		 		<label>Deskripsi: </label>
+						<textarea class="form-control" id="deskripsi" name="deskripsi">Input Deskripsi</textarea> 
 					</div>
 				</div>
 				<div class="modal-footer">

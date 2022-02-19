@@ -17,28 +17,27 @@
       <b>Main Navigation</b>
     </div>
 
-    <li class="nav-item">
+    <li class="nav-item <?= $this->uri->segment(1) == 'admin'|| $this->uri->segment(1) == '' ? 'active' : '' ?>">
       <a class="nav-link" href="<?= base_url('admin'); ?>">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="">
         <i class="fas fa-fw fa-users"></i>
         <span>Customers</span></a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+    <li class="nav-item <?= $this->uri->segment(1) == 'item'|| $this->uri->segment(1) == 'category' ? 'active' : '' ?>">
+      <a class="nav-link <?= $this->uri->segment(1) == 'item'|| $this->uri->segment(1) == 'category' ? '' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-inbox"></i>
         <span>Products</span>
       </a>
-      <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div id="collapseOne" class="collapse <?= $this->uri->segment(1) == 'item'|| $this->uri->segment(1) == 'category' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Custom Components:</h6>
-          <a class="collapse-item" href="buttons.html">Buttons</a>
-          <a class="collapse-item" href="cards.html">Cards</a>
+          <a class="collapse-item" href="<?= base_url('category'); ?>">Kategori</a>
+          <a class="collapse-item" href="<?= base_url('item'); ?>">Item</a>
         </div>
       </div>
     </li>
@@ -58,7 +57,7 @@
     </li>
 
     <?php if($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 2) { ?>
-      <li class="nav-item">
+      <li class="nav-item <?= $this->uri->segment(1) == 'report' ? 'active' : '' ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-edit"></i>
           <span>Reports</span>
@@ -72,13 +71,13 @@
         </div>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item <?= $this->uri->segment(1) == 'supplier' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('supplier'); ?>">
           <i class="fas fa-fw fa-truck"></i>
           <span>Suppliers</span></a>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item <?= $this->uri->segment(1) == 'user' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('user'); ?>">
           <i class="fas fa-fw fa-user"></i>
           <span>User</span></a>

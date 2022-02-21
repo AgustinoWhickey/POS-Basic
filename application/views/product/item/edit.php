@@ -19,6 +19,7 @@
                 <label for="nama" class="col-sm-2 col-form-label">Nama Kategori</label>
                 <div class="col-sm-10">
                   <input type="hidden" value="<?= $oneitem->id; ?>" name="item_id">
+                  <input type="hidden" value="<?= $oneitem->image; ?>" name="gambar">
                   <input type="text" class="form-control" id="nama" name="nama" value="<?= $oneitem->name; ?>" >
 				          <?= form_error('nama','<small class="text-danger pl-3">','</small>'); ?>
                 </div>
@@ -52,6 +53,19 @@
                 <label for="nama" class="col-sm-2 col-form-label">Stock</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control" id="stock" name="stock" value="<?= $oneitem->stock; ?>" >
+				          <?= form_error('nama','<small class="text-danger pl-3">','</small>'); ?>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="nama" class="col-sm-2 col-form-label">Gambar</label>
+                <div class="col-sm-10">
+                  <div class="custom-file  mb-2">
+                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <label for="image" class="custom-file-label">Choose file</label>
+                  </div>
+                  <?php if($oneitem->image != ''){ ?>
+                    <img src="<?=  base_url('assets/img/upload/products/'.$oneitem->image); ?>" style="width:80%">
+                  <?php } ?>
 				          <?= form_error('nama','<small class="text-danger pl-3">','</small>'); ?>
                 </div>
               </div>

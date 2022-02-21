@@ -30,20 +30,22 @@ class Item extends CI_Controller {
 			$this->load->view("product/item/index",$data);
 			$this->load->view("templates/footer");
 		} else {
-
+			$image = '';
 			$upload_image = $_FILES['image']['name'];
 
 			if($upload_image){
 				$config['allowed_types'] = 'gif|jpg|png';
 				$config['max_size'] = '2048';
 				$config['upload_path'] = './assets/img/upload/products';
-				$config['file_name'] = 'img-'.$this->input->post('name');
+				$config['file_name'] = 'img-'.$this->input->post('barcode');
 
 				$this->load->library('upload',$config);
 				if($this->upload->do_upload('image')){
-					echo 'Sukses';
+					// unlink(FCPATH.'assets/img/upload/products/'.$this->upload->data('file_name'));
+					$image = $this->upload->data('file_name');
 				} else {
-					echo $this->upload->display_errors();
+					$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">'.$this->upload->display_errors().'</div>');
+					redirect('item');
 				}
 			}
 
@@ -53,6 +55,7 @@ class Item extends CI_Controller {
 				'category_id' => htmlspecialchars($this->input->post('kategori',true)),
 				'price' => htmlspecialchars($this->input->post('harga',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
+				'image' => $image,
 				'created' => time()
 			];
 
@@ -85,6 +88,28 @@ class Item extends CI_Controller {
 			}
 		} else {
 
+			$image = $data['oneitem']->image;
+			$upload_image = $_FILES['image']['name'];
+
+			if($upload_image){
+				$config['allowed_types'] = 'gif|jpg|png';
+				$config['max_size'] = '2048';
+				$config['upload_path'] = './assets/img/upload/products';
+				$config['file_name'] = 'img-'.$this->input->post('barcode');
+
+				$this->load->library('upload',$config);
+				$fileExt = pathinfo($upload_image, PATHINFO_EXTENSION);
+				if($image != ''){
+					unlink('./assets/img/upload/products/img-'.$this->input->post('barcode').'.'.$fileExt);
+				}
+				if($this->upload->do_upload('image')){
+					$image = $this->upload->data('file_name');
+				} else {
+					$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">'.$this->upload->display_errors().'</div>');
+					redirect('item');
+				}
+			}
+
 			$data = [
 				'id' => $this->input->post('item_id'),
 				'barcode' => htmlspecialchars($this->input->post('barcode',true)),
@@ -92,6 +117,7 @@ class Item extends CI_Controller {
 				'category_id' => htmlspecialchars($this->input->post('kategori',true)),
 				'price' => htmlspecialchars($this->input->post('price',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
+				'image' => $image,
 				'updated' => time()
 			];
 
@@ -113,12 +139,35 @@ class Item extends CI_Controller {
 		$this->item_m->deleteItem($id);
 
 		if($this->db->affected_rows() > 0){
+			unlink('./assets/img/upload/products/'.$this->input->post('gambar'));
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Item Berhasil Dihapus!</div>');
 			redirect('item');
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Hapus Item Baru Gagal! Silahkan Coba Lagi!</div>');
 			redirect('item');
 		}
+	}
+
+	public function print_barcode($id_item)
+	{
+		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
+		$data['oneitem'] 	= $this->item_m->getItem($id_item);
+		$data['category'] 	= $this->category_m->getCategories();
+		$data['title'] 		= 'Barcode Item';
+
+		$this->load->view("templates/header",$data);
+		$this->load->view("templates/sidebar",$data);
+		$this->load->view("templates/topbar",$data);
+		$this->load->view("product/item/barcode",$data);
+		$this->load->view("templates/footer");
+	} 
+
+	public function printpdf_barcode($id_item)
+	{
+		$data['oneitem'] 	= $this->item_m->getItem($id_item);
+		$generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+    
+		pdf_generator('<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($data['oneitem']->barcode, $generator::TYPE_CODE_128)) . '"><br>'.$data['oneitem']->barcode,'coba');
 	}
 
 }

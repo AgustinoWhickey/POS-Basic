@@ -19,3 +19,15 @@
 	}
 
  }
+
+ function pdf_generator($html, $filename)
+ {
+	$ci = get_instance();
+
+	$dompdf = new Dompdf\Dompdf();
+	$dompdf->loadHtml($html);
+	$dompdf->setPaper('A4', 'landscape');
+	$dompdf->render();
+
+	$dompdf->stream($filename, array('Attachment' => 0));
+ }

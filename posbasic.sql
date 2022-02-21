@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2020 at 12:30 PM
+-- Generation Time: Feb 21, 2022 at 01:50 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -19,8 +19,99 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ciadmin`
+-- Database: `posbasic`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_category`
+--
+
+CREATE TABLE `product_category` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`id`, `nama`, `created`, `updated`) VALUES
+(1, 'Mint Tea', 1645151874, 1645153160),
+(3, 'Chamonile', 1645235050, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_item`
+--
+
+CREATE TABLE `product_item` (
+  `id` int(11) NOT NULL,
+  `barcode` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `unit_id` int(11) DEFAULT NULL,
+  `price` int(11) NOT NULL,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  `image` varchar(100) NOT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_item`
+--
+
+INSERT INTO `product_item` (`id`, `barcode`, `name`, `category_id`, `unit_id`, `price`, `stock`, `image`, `created`, `updated`) VALUES
+(3, '42243', 'Caramel', 1, NULL, 12000, 3, 'img-42243.png', 1645234328, 1645320231),
+(4, '2243', 'Minty', 1, NULL, 0, 0, '', 1645241526, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_unit`
+--
+
+CREATE TABLE `product_unit` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_unit`
+--
+
+INSERT INTO `product_unit` (`id`, `nama`, `created`, `updated`) VALUES
+(1, 'Mint Tea', 1645151874, 1645153160);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id`, `name`, `phone`, `address`, `description`, `created`, `updated`) VALUES
+(1, 'Toko Teh Sawangan 1', '0818578876', 'Jl Sawangan 125', 'Teh Racikan dari sawangan 1', 1607007323, 1645025959);
 
 -- --------------------------------------------------------
 
@@ -44,8 +135,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
-(1, 'Mayori', 'test@admin.com', 'default.jpg', '$2y$10$tzbBR8cGaJYn4muz2KIhwu8/EdFsI9Zj4yMgjRdgxGiu9ydadcZRC', 2, 1, 1607007323),
-(2, 'AgustinoW', 'agustino@gmail.com', 'wuk1.jpg', '$2y$10$uXeeZ.RqDgwW8XN4iVj82eQSRp1s39F.nxHVdlrlYxbx8S.h2QyBW', 1, 1, 1607007741);
+(1, 'Mayori', 'test@admin.com', 'default.jpg', '$2y$10$im6gTv..alHQ85SMEk468egbwiFGnJB2BflCTYkDNuRQcHtryOEc2', 2, 1, 1607007323),
+(2, 'Agustino Wicaksono', 'agustino@gmail.com', 'default.jpg', '$2y$10$ggrhAOAxKlbJbJaWdtloMe2FIIwW0G4QPtWf./hWL6asl0NY44ds6', 1, 1, 1644655481),
+(5, 'Admin Sawangan', 'sawangan1@gmail.com', 'default.jpg', '$2y$10$ZYGTMK0AmfjPVloP5cEdh.7ypAWwBtNam42Er6a8R/pZrUImcwJdC', 2, 1, 1645029395);
 
 -- --------------------------------------------------------
 
@@ -105,8 +197,9 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
-(1, 'Administrator'),
-(2, 'Member');
+(1, 'Super Admin'),
+(2, 'Administrator'),
+(3, 'Member');
 
 -- --------------------------------------------------------
 
@@ -154,6 +247,30 @@ CREATE TABLE `user_token` (
 --
 
 --
+-- Indexes for table `product_category`
+--
+ALTER TABLE `product_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_item`
+--
+ALTER TABLE `product_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_unit`
+--
+ALTER TABLE `product_unit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -194,10 +311,34 @@ ALTER TABLE `user_token`
 --
 
 --
+-- AUTO_INCREMENT for table `product_category`
+--
+ALTER TABLE `product_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `product_item`
+--
+ALTER TABLE `product_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `product_unit`
+--
+ALTER TABLE `product_unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_access_menu`
@@ -215,7 +356,7 @@ ALTER TABLE `user_menu`
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user_sub_menu`

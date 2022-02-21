@@ -34,6 +34,7 @@
                 <th>Kategori</th>
                 <th>Harga</th>
                 <th>Stock</th>
+                <th>Gambar</th>
                 <th>Aksi</th>
             </thead>
             <tbody>
@@ -43,11 +44,21 @@
 					  ?>
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
-    						<td><?= $it->name; ?></td>
+    						<td>
+                  <?= $it->name; ?>
+                  <a href="<?= site_url('item/print_barcode/'.$it->id); ?>" class="btn btn-default btn-xs">
+                    <i class="fa fa-barcode"></i>
+                  </a>
+                </td>
     						<td><?= $it->barcode; ?></td>
     						<td><?= $it->category_name; ?></td>
     						<td><?= $it->price; ?></td>
     						<td><?= $it->stock; ?></td>
+    						<td>
+                  <?php if($it->image != ''){ ?>
+                    <img src="<?=  base_url('assets/img/upload/products/'.$it->image); ?>" style="width:100px;">
+                  <?php } ?>
+                </td>
     						<td>
                   <div class="row">
                     <div class="col-md-2">
@@ -56,6 +67,7 @@
                     <div class="col-md-6">
                       <form action="<?= site_url('item/delete')?>" method="post">
                         <input type="hidden" name="item_id" value="<?= $it->id?>">
+                        <input type="hidden" name="gambar" value="<?= $it->image?>">
                         <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
                       </form>
                     </div>

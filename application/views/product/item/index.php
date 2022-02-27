@@ -25,7 +25,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="table1" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>No</th>
@@ -38,43 +38,7 @@
                 <th>Aksi</th>
             </thead>
             <tbody>
-    				<?php
-    					$i = 1; 
-    					foreach($items as $it){ 
-					  ?>
-    					<tr>
-    						<th scope="row"><?= $i++; ?></th>
-    						<td>
-                  <?= $it->name; ?>
-                  <a href="<?= site_url('item/print_barcode/'.$it->id); ?>" class="btn btn-default btn-xs">
-                    <i class="fa fa-barcode"></i>
-                  </a>
-                </td>
-    						<td><?= $it->barcode; ?></td>
-    						<td><?= $it->category_name; ?></td>
-    						<td><?= $it->price; ?></td>
-    						<td><?= $it->stock; ?></td>
-    						<td>
-                  <?php if($it->image != ''){ ?>
-                    <img src="<?=  base_url('assets/img/upload/products/'.$it->image); ?>" style="width:100px;">
-                  <?php } ?>
-                </td>
-    						<td>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <a href="<?= base_url('item/edit/'.$it->id); ?>" class="badge badge-success">Edit</a>
-                    </div>
-                    <div class="col-md-6">
-                      <form action="<?= site_url('item/delete')?>" method="post">
-                        <input type="hidden" name="item_id" value="<?= $it->id?>">
-                        <input type="hidden" name="gambar" value="<?= $it->image?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
-                      </form>
-                    </div>
-                  </div>
-    						</td>
-    					</tr>
-    				<?php } ?>
+    				
     			</tbody>
           </table>
         </div>
@@ -138,3 +102,26 @@
 		</div>
 	</div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#table1').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "<?= site_url('item/get_ajax'); ?>",
+        "type": "POST"
+      },
+      "columnDefs": [
+        {
+          "targets": [4,5],
+          "className": 'text-right'
+        },
+        {
+          "targets": [6],
+          "className": 'text-center'
+        }
+      ]
+    });
+  });
+</script>

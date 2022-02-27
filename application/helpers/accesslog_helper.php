@@ -31,3 +31,9 @@
 
 	$dompdf->stream($filename, array('Attachment' => 0));
  }
+
+ function indo_currency($nominal)
+ {
+	$result = "Rp. ".number_format($nominal, 2, ',', '.');
+	return $result;
+ }

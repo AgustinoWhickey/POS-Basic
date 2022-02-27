@@ -11,6 +11,46 @@ class Item extends CI_Controller {
 		$this->load->model('Category_model','category_m');
 		is_logged_in();
 	}
+
+	function get_ajax() {
+        $list = $this->item_m->get_datatables();
+        $data = array();
+        $no = @$_POST['start'];
+        foreach ($list as $item) {
+            $no++;
+            $row = array();
+            $row[] = $no.".";
+			$row[] = $item->name.' <a href="'.site_url('item/print_barcode/'.$item->id).'" class="btn btn-default btn-xs">
+									<i class="fa fa-barcode"></i>
+								</a>';
+            $row[] = $item->barcode;
+            $row[] = $item->category_name;
+            $row[] = $item->price;
+            $row[] = $item->stock;
+            $row[] = $item->image != null ? '<img src="'.base_url('assets/img/upload/products/'.$item->image).'" class="img" style="width:100px">' : null;
+			$row[] = '<div class="row">
+						<div class="col-md-2">
+						<a href="'.base_url('item/edit/'.$item->id).'" class="badge badge-success">Edit</a>
+						</div>
+						<div class="col-md-6">
+						<form action="'.site_url('item/delete').'" method="post">
+							<input type="hidden" name="item_id" value="'.$item->id.'">
+							<input type="hidden" name="gambar" value="'.$item->image.'">
+							<button type="submit" onclick="return confirm(\'Apakah Anda yakin?\')" class="badge badge-danger">Delete</button>
+						</form>
+						</div>
+					</div>';
+           $data[] = $row;
+        }
+        $output = array(
+                    "draw" => @$_POST['draw'],
+                    "recordsTotal" => $this->item_m->count_all(),
+                    "recordsFiltered" => $this->item_m->count_filtered(),
+                    "data" => $data,
+                );
+        // output to json format
+        echo json_encode($output);
+    }
 	
 	public function index()
 	{

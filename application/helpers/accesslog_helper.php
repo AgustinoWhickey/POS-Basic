@@ -37,3 +37,4 @@
 	$result = "Rp. ".number_format($nominal, 2, ',', '.');
 	return $result;
  }
+

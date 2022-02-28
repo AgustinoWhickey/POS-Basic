@@ -91,4 +91,32 @@ class Item_model extends CI_Model
 	
 	}
 
+    public function updatestockout($data)
+	{
+        $qty = $data['qty'];
+        $id = $data['item_id'];
+        $updated = time();
+
+        $sql = "UPDATE product_item SET stock = stock - '$qty', updated = '$updated' WHERE id = '$id'";
+
+        $this->db->query($sql);
+
+		return $this->db->affected_rows() == 1;
+	
+	}
+
+    public function updatestockin($data)
+	{
+        $qty = $data['qty'];
+        $id = $data['item_id'];
+        $updated = time();
+
+        $sql = "UPDATE product_item SET stock = stock + '$qty', updated = '$updated' WHERE id = '$id'";
+
+        $this->db->query($sql);
+
+		return $this->db->affected_rows() == 1;
+	
+	}
+
 }

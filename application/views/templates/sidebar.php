@@ -51,7 +51,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="<?= base_url('category'); ?>">Sales</a>
           <a class="collapse-item" href="<?= base_url('stock/stockin'); ?>">Stock In</a>
-          <a class="collapse-item" href="<?= base_url('item'); ?>">Stock Out</a>
+          <a class="collapse-item" href="<?= base_url('stock/stockout'); ?>">Stock Out</a>
         </div>
       </div>
     </li>

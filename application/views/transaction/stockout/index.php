@@ -14,14 +14,14 @@
       </div>
       <div class="col-lg-6 text-right">
         <a data-toggle="modal" href="#newUserModal" class="btn btn-primary">
-            <i class="fa fa-user-plus"></i>  Input Stock In
+            <i class="fa fa-user-plus"></i>  Input Stock Out
         </a>
       </div>
     </div>
 
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Table Stock In</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Table Stock Out</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -60,7 +60,7 @@
                       Detail</a>
                     </div>
                     <div class="col-md-6">
-                      <form action="<?= site_url('stock/stockin_delete')?>" method="post">
+                      <form action="<?= site_url('stock/stockout_delete')?>" method="post">
                         <input type="hidden" name="idproduct" value="<?= $stock->product_id?>">
                         <input type="hidden" name="idstock" value="<?= $stock->id?>">
                         <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
@@ -86,12 +86,12 @@
 	<div class="modal-dialog" role="document" style="overflow-y: initial;">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="newMenuModalLabel">Input Stock</h5>
+				<h5 class="modal-title" id="newMenuModalLabel">Input Stock Out</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"></span>
 				</button>
 			</div>
-			<form action="<?= base_url('stock/stockin'); ?>" method="post">
+			<form action="<?= base_url('stock/stockout'); ?>" method="post">
 				<div class="modal-body"  style="height: 70vh; overflow-y:auto;">
                     <div class="form-group">
 						<label>Tanggal: </label>
@@ -123,15 +123,6 @@
 					<div class="form-group">
            		 		<label>Detail: </label>
 						<textarea class="form-control" id="detail" name="detail">Input Detail</textarea> 
-					</div>
-                    <div class="form-group">
-                      <label>Supplier: </label>
-                      <select name="supplier" id="supplier" class="form-control">
-                      <option value="">-- Pilih Supplier --</option> 
-                        <?php foreach($suppliers as $supp){ ?>
-                          <option value="<?= $supp->id ?>"><?= $supp->name; ?></option>    
-                        <?php } ?>    
-                      </select>
 					</div>
                     <div class="form-group">
             			<label>Qty: </label>
@@ -175,7 +166,7 @@
                             <td><?= indo_currency($item->price); ?></td>
                             <td><?= $item->stock; ?></td>
                             <td>
-                                <button class="btn btn-xs btn-info" id="selectstockin" data-id="<?= $item->id; ?>" data-code="<?= $item->barcode; ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
+                                <button class="btn btn-xs btn-info" id="selectstockout" data-id="<?= $item->id; ?>" data-code="<?= $item->barcode; ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
                                     <i class="fa fa-check"></i> Pilih
                                 </button>
                             </td>
@@ -208,10 +199,6 @@
                       <td><span id="det_nama"></span></td>
                     </tr>
                     <tr>
-                      <th>Supplier</th>
-                      <td><span id="det_supplier"></span></td>
-                    </tr>
-                    <tr>
                       <th>Qty</th>
                       <td><span id="det_qty"></span></td>
                     </tr>
@@ -231,7 +218,7 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on('click', '#selectstockin', function() {
+        $(document).on('click', '#selectstockout', function() {
             var itemid = $(this).data('id');
             var code = $(this).data('code');
             var name = $(this).data('name');
@@ -247,13 +234,11 @@
             var stockid = $(this).data('id');
             var code = $(this).data('kode');
             var name = $(this).data('name');
-            var supplier = $(this).data('supplier');
             var detail = $(this).data('detail');
             var inputdate = $(this).data('inputdate');
             var qty = $(this).data('qty');
             $('#det_kode').html(code);
             $('#det_nama').html(name);
-            $('#det_supplier').html(supplier);
             $('#det_qty').html(qty);
             $('#det_detail').html(detail);
             $('#det_inputdate').html(inputdate);

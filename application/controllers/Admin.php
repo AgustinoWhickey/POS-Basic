@@ -11,8 +11,17 @@ class Admin extends CI_Controller {
 		is_logged_in();
 	}
 	
-	public function index(){
+	public function index()
+	{
+		$query = $this->db->query("SELECT sale_detail.id AS saleid, product_item.name, (SELECT SUM(sale_detail.qty)) AS sold
+				FROM sale_detail
+					INNER JOIN sale ON sale_detail.sale_id = sale.id
+					INNER JOIN product_item ON sale_detail.item_id = product_item.id
+				GROUP BY sale_detail.item_id
+				ORDER BY sold DESC
+				LIMIT 10");
 
+		$data['chart'] = $query->result();
 		$data['user'] 	= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['title'] 	= 'Dashboard';
 
@@ -20,7 +29,7 @@ class Admin extends CI_Controller {
 		$this->load->view("templates/sidebar",$data);
 		$this->load->view("templates/topbar",$data);
 		$this->load->view("admin/index",$data);
-		$this->load->view("templates/footer");
+		$this->load->view("templates/footer_dashboard",$data);
 	
 	}
 

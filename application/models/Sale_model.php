@@ -118,7 +118,7 @@ class Sale_model extends CI_Model
             'remaining' => $data['change'],
             'note' => $data['note'],
             'user_id' => $this->session->userdata('user_id'),
-            'date' => $data['date'],
+            'date' => strtotime($data['date']),
             'created' => time(),
         );
 

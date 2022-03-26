@@ -13,7 +13,7 @@ class Admin extends CI_Controller {
 	
 	public function index()
 	{
-		$query = $this->db->query("SELECT sale_detail.id AS saleid, product_item.name, (SELECT SUM(sale_detail.qty)) AS sold
+		$query = $this->db->query("SELECT sale_detail.id AS saleid, product_item.name, (SELECT SUM(sale_detail.qty)) AS sold, (SELECT SUM(sale.total_price)) AS total_penjualan
 				FROM sale_detail
 					INNER JOIN sale ON sale_detail.sale_id = sale.id
 					INNER JOIN product_item ON sale_detail.item_id = product_item.id
@@ -21,8 +21,19 @@ class Admin extends CI_Controller {
 				ORDER BY sold DESC
 				LIMIT 10");
 
-		$data['chart'] = $query->result();
+		$result = $query->result();
+
+		$total_penjualan = 0;
+		$total_item_terjual = 0;
+		foreach($result as $value){
+			$total_penjualan += (int)$value->total_penjualan;
+			$total_item_terjual += (int)$value->sold;
+		}
+		
+		$data['chart'] = $result;
 		$data['user'] 	= $this->login_m->ceklogin($this->session->userdata('email'));
+		$data['total_penjualan'] = indo_currency($total_penjualan);
+		$data['total_item_terjual'] = $total_item_terjual;
 		$data['title'] 	= 'Dashboard';
 
 		$this->load->view("templates/header",$data);

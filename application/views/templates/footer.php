@@ -47,11 +47,45 @@
   <!-- Page level plugins -->
   <script src="<?= base_url(); ?>assets/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?= base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url(); ?>assets/vendor/datatables/dataTables.buttons.min.js"></script>
+  <script src="<?= base_url(); ?>assets/vendor/datatables/buttons.print.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="<?= base_url(); ?>assets/js/demo/datatables-demo.js"></script>
 
   <script>
+    $(document).ready(function() {
+        $('#reportTable').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax": {
+              "url": "<?= site_url('report/get_ajax_sale'); ?>",
+              "type": "POST"
+          },
+          "columnDefs": [
+            {
+            "targets": [4,5],
+            "className": 'text-right'
+            },
+            {
+            "targets": [6],
+            "className": 'text-center'
+            }
+          ],
+            "dom": 'Bfrtip',
+            "buttons": [
+              {
+                extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                }
+            }
+            ],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        });
+    } );
+
     $('.custom-file-input').on('change',function(){
       let filename = $(this).val().split('\\').pop();
       $(this).next('.custom-file-label').addClass('selected').html(filename);

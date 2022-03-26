@@ -25,7 +25,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered display" id="reportTable" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>No</th>
@@ -37,27 +37,7 @@
                 <th>Actions</th>
             </thead>
             <tbody>
-    				<?php
-    					$i = 1; 
-    					foreach($sales as $sal){ 
-					  ?>
-    					<tr>
-    						<th scope="row"><?= $i++; ?></th>
-    						<td><?= $sal->invoice; ?></td>
-    						<td><?= Date("d-m-Y", $sal->created); ?></td>
-    						<td><?= $sal->total_price; ?></td>
-    						<td><?= $sal->discount; ?></td>
-    						<td><?= $sal->cash; ?></td>
-    						<td>
-                                <a href="<?= site_url('sale/cetak/'.$sal->id); ?>" target="_blank" class="btn btn-xs btn-info" id="printreport">
-                                    <i class="fa fa-print"></i> Print
-                                </a>
-                                <button data-invoice="<?= $sal->invoice ?>" data-date="<?= $sal->date ?>" data-time="<?= Date("d-m-Y", $sal->created) ?>" data-total="<?= indo_currency($sal->total_price)?>" data-diskon="<?= indo_currency($sal->discount) ?>" data-grandtotal="<?= indo_currency($sal->final_price)?>" data-cash="<?= indo_currency($sal->cash) ?>" data-remaining="<?= indo_currency($sal->remaining) ?>" data-note="<?= $sal->note ?>" data-kasir="<?= $sal->user_name?>" data-saleid="<?= $sal->id?>" id="detail" data-target="#modal-detail" data-toggle="modal" class="btn btn-xs btn-success" id="detailreport">
-                                     Detail
-                                </button>
-                            </td>
-    					</tr>
-    				<?php } ?>
+    				
     			</tbody>
           </table>
         </div>
@@ -121,6 +101,7 @@
 	</div>
 </div>
 <script>
+
     $(document).on('click', '#detail', function(){
         var ini = $(this);
         $('#invoice').text(ini.data('invoice'));

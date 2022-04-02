@@ -14,6 +14,18 @@ class Stock_model extends CI_Model
         return $this->db->get()->result();
     }
 
+    public function getStockItemIns()
+    {
+        $this->db->select('stock_item.*, item.id as item_id, item.name as product_name, supplier.name as supplier_name, user.name as user_name');
+        $this->db->from('stock_item');
+        $this->db->join('item','item.id = stock_item.item_id');
+        $this->db->join('supplier','supplier.id = stock_item.supplier_id','left');
+        $this->db->join('user','user.id = stock_item.user_id');
+        $this->db->where('type','in');
+
+        return $this->db->get()->result();
+    }
+
     public function getStockOuts()
     {
         $this->db->select('stock.*, product_item.id as product_id, product_item.name as product_name, product_item.barcode as product_barcode, supplier.name as supplier_name, user.name as user_name');

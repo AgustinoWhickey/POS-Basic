@@ -13,7 +13,7 @@
         <?= $this->session->flashdata('message'); ?>
       </div>
       <div class="col-lg-6 text-right">
-        <a data-toggle="modal" href="#newUserModal" class="btn btn-primary">
+        <a data-toggle="modal" href="#newInputModal" class="btn btn-primary">
             <i class="fa fa-user-plus"></i>  Input Stock In
         </a>
       </div>
@@ -29,9 +29,10 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Kode</th>
                 <th>Produk Item</th>
+                <th>Harga</th>
                 <th>Qty</th>
+                <th>Unit</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
             </thead>
@@ -42,7 +43,6 @@
 					  ?>
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
-    						<td><?= $stock->product_barcode; ?></td>
     						<td><?= $stock->product_name; ?></td>
     						<td><?= $stock->qty; ?></td>
     						<td><?= date("d-m-Y",$stock->date); ?></td>
@@ -51,7 +51,6 @@
                     <div class="col-md-2">
                       <a data-toggle="modal" id="show_detail" href="#modal-detail" class="badge badge-default" 
                         data-id="<?= $stock->id; ?>" 
-                        data-kode="<?= $stock->product_barcode; ?>" 
                         data-name="<?= $stock->product_name; ?>" 
                         data-detail="<?= $stock->detail; ?>" 
                         data-supplier="<?= $stock->supplier_name; ?>" 
@@ -124,6 +123,56 @@
            		 		<label>Detail: </label>
 						<textarea class="form-control" id="detail" name="detail">Input Detail</textarea> 
 					</div>
+                    <div class="form-group">
+                      <label>Supplier: </label>
+                      <select name="supplier" id="supplier" class="form-control">
+                      <option value="">-- Pilih Supplier --</option> 
+                        <?php foreach($suppliers as $supp){ ?>
+                          <option value="<?= $supp->id ?>"><?= $supp->name; ?></option>    
+                        <?php } ?>    
+                      </select>
+					</div>
+                    <div class="form-group">
+            			<label>Qty: </label>
+						<input type="number" class="form-control" id="qty" name="qty" placeholder="Input Qty">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Tambah</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="newInputModal" tabindex="-1" role="dialog" aria-labelledby="newInputModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document" style="overflow-y: initial;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="newMenuModalLabel">Input Stock</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"></span>
+				</button>
+			</div>
+			<form action="<?= base_url('stock/stockin'); ?>" method="post">
+				<div class="modal-body"  style="height: 70vh; overflow-y:auto;">
+            <div class="form-group">
+              <label>Tanggal: </label>
+              <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= date('Y-m-d')?>" required>
+            </div>
+					  <div class="form-group">
+            		<label>Nama Item: </label>
+                <input type="text" class="form-control" id="name" name="name">
+              </div>
+              <div class="form-group">
+                  <label for="unit_name">Initial Stock</label>
+                  <input type="text" name="stock" id="stock" class="form-control" value="-" readonly>
+                </div>
+					      <div class="form-group">
+           		 		<label>Detail: </label>
+                <textarea class="form-control" id="detail" name="detail">Input Detail</textarea> 
+              </div>
                     <div class="form-group">
                       <label>Supplier: </label>
                       <select name="supplier" id="supplier" class="form-control">

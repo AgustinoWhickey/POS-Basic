@@ -6,7 +6,7 @@ class Stock extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Item_model','item_m');
+		$this->load->model('Product_Item_model','item_m');
 		$this->load->model('Login_model','login_m');
         $this->load->model('Supplier_model','supplier_m');
         $this->load->model('Stock_model','stock_m');
@@ -19,7 +19,7 @@ class Stock extends CI_Controller {
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['suppliers'] 	= $this->supplier_m->getSuppliers();
 		$data['items'] 	    = $this->item_m->getItems();
-		$data['stocks'] 	= $this->stock_m->getStockIns();
+		$data['stocks'] 	= $this->stock_m->getStockItemIns();
 
 		$this->form_validation->set_rules('name','Nama','required');
 
@@ -43,7 +43,7 @@ class Stock extends CI_Controller {
 				'created' => time()
 			];
 
-			$this->db->insert('stock', $data); 
+			$this->db->insert('stock_item', $data); 
 			$this->stock_m->updatestockproduct($data);
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Baru Berhasil Ditambahkan!</div>');
 			redirect('stock/stockin');

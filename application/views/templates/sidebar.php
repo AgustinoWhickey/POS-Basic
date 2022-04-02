@@ -37,7 +37,8 @@
       <div id="collapseOne" class="collapse <?= $this->uri->segment(1) == 'item'|| $this->uri->segment(1) == 'category' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="<?= base_url('category'); ?>">Kategori</a>
-          <a class="collapse-item" href="<?= base_url('item'); ?>">Item</a>
+          <a class="collapse-item" href="<?= base_url('item'); ?>">Menu</a>
+          <a class="collapse-item" href="<?= base_url('itemmenu'); ?>">Item</a>
         </div>
       </div>
     </li>
@@ -51,7 +52,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="<?= base_url('sale'); ?>">Sales</a>
           <a class="collapse-item" href="<?= base_url('stock/stockin'); ?>">Stock In</a>
-          <a class="collapse-item" href="<?= base_url('stock/stockout'); ?>">Stock Out</a>
+          <!-- <a class="collapse-item" href="<?//= base_url('stock/stockout'); ?>">Stock Out</a> -->
         </div>
       </div>
     </li>

@@ -6,7 +6,7 @@ class Sale extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Item_model','item_m');
+		$this->load->model('Product_Item_model','item_m');
 		$this->load->model('Login_model','login_m');
         $this->load->model('Sale_model','sale_m');
         $this->load->model('Stock_model','stock_m');

@@ -8,6 +8,7 @@ class Item extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Product_Item_model','item_m');
 		$this->load->model('Item_model','unit_item_m');
+		$this->load->model('Item_menu_model','item_menu_m');
 		$this->load->model('Login_model','login_m');
 		$this->load->model('Category_model','category_m');
 		is_logged_in();
@@ -29,18 +30,12 @@ class Item extends CI_Controller {
             $row[] = $item->price;
             $row[] = $item->stock;
             $row[] = $item->image != null ? '<img src="'.base_url('assets/img/upload/products/'.$item->image).'" class="img" style="width:100px">' : null;
-			$row[] = '<div class="row">
-						<div class="col-md-2">
-						<a href="'.base_url('item/edit/'.$item->id).'" class="badge badge-success">Edit</a>
-						</div>
-						<div class="col-md-6">
+			$row[] = '<a href="'.base_url('item/edit/'.$item->id).'" class="btn btn-xs btn-info">Edit</a>
 						<form action="'.site_url('item/delete').'" method="post">
 							<input type="hidden" name="item_id" value="'.$item->id.'">
 							<input type="hidden" name="gambar" value="'.$item->image.'">
-							<button type="submit" onclick="return confirm(\'Apakah Anda yakin?\')" class="badge badge-danger">Delete</button>
-						</form>
-						</div>
-					</div>';
+							<button type="submit" onclick="return confirm(\'Apakah Anda yakin?\')" class="btn btn-xs btn-danger">Delete</button>
+						</form>';
            $data[] = $row;
         }
         $output = array(
@@ -126,10 +121,12 @@ class Item extends CI_Controller {
 
 	public function edit($id_item)
 	{
-		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
-		$data['oneitem'] 	= $this->item_m->getItem($id_item);
-		$data['category'] 	= $this->category_m->getCategories();
-		$data['title'] 		= 'Edit Item';
+		$data['user'] 			= $this->login_m->ceklogin($this->session->userdata('email'));
+		$data['oneitem'] 		= $this->item_m->getItem($id_item);
+		$data['onemenuitem'] 	= $this->item_menu_m->getMenuItem($id_item);
+		$data['category'] 		= $this->category_m->getCategories();
+		$data['unititems'] 		= $this->unit_item_m->getItems();
+		$data['title'] 			= 'Edit Item';
 
 		$this->form_validation->set_rules('nama','Nama','required|trim');
 		if($this->form_validation->run() == false)
@@ -181,20 +178,49 @@ class Item extends CI_Controller {
 
 			$this->item_m->updateitem($data);
 
-			if($this->db->affected_rows() > 0){
-				$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Update Item Sukses!</div>');
-				redirect('item/edit/'.$this->input->post('item_id'));
-			} else {
-				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Update Item Gagal! Silahkan Coba Lagi!</div>');
-				redirect('item/edit/'.$this->input->post('item_id'));
+			for($i=1;$i<=8;$i++){
+				$id = 'menuitem'.$i;
+				$bahan = 'bahan'.$i;
+				$quantity = 'qty'.$i;
+
+				if($this->input->post($bahan) != ''){
+					$databahan = [
+						'id' => (int)$this->input->post($id),
+						'product_id' => (int)$this->input->post('item_id'),
+						'item_id' => (int)$this->input->post($bahan),
+						'qty' => (int)$this->input->post($quantity),
+						'updated' => time()
+					];
+				}
+
+				$cek = $this->item_menu_m->getMenuItem((int)$this->input->post('item_id'));
+
+				if(count($cek) > 0 ){
+					$this->item_menu_m->updatemenuitem($databahan);
+				} else {
+					$this->db->insert('menu_item', $databahan);
+				}
+					
 			}
+
+			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Update Item Sukses!</div>');
+			redirect('item/edit/'.$this->input->post('item_id'));
+			// if($this->db->affected_rows() > 0){
+			// 	$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Update Item Sukses!</div>');
+			// 	redirect('item/edit/'.$this->input->post('item_id'));
+			// } else {
+			// 	$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Update Item Gagal! Silahkan Coba Lagi!</div>');
+			// 	redirect('item/edit/'.$this->input->post('item_id'));
+			// }
 		}
 	}
 
 	public function delete()
 	{
 		$id = $this->input->post('item_id');
+		
 		$this->item_m->deleteItem($id);
+		$this->item_menu_m->deleteMenuItem($id);
 
 		if($this->db->affected_rows() > 0){
 			unlink('./assets/img/upload/products/'.$this->input->post('gambar'));

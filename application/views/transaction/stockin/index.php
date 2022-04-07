@@ -31,8 +31,8 @@
                 <th>No</th>
                 <th>Produk Item</th>
                 <th>Harga</th>
-                <th>Qty</th>
                 <th>Unit</th>
+                <th>Qty</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
             </thead>
@@ -44,27 +44,24 @@
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
     						<td><?= $stock->product_name; ?></td>
-    						<td><?= $stock->qty; ?></td>
+    						<td><?= $stock->price; ?></td>
+                <td><?= $stock->unit; ?></td>
+    						<td><?= $stock->unit_qty; ?></td>
     						<td><?= date("d-m-Y",$stock->date); ?></td>
     						<td>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <a data-toggle="modal" id="show_detail" href="#modal-detail" class="badge badge-default" 
+                      <a data-toggle="modal" id="show_detail" href="#modal-detail" class="btn btn-xs btn-info" 
                         data-id="<?= $stock->id; ?>" 
                         data-name="<?= $stock->product_name; ?>" 
                         data-detail="<?= $stock->detail; ?>" 
                         data-supplier="<?= $stock->supplier_name; ?>" 
                         data-inputdate="<?= date("d-m-Y",$stock->date); ?>" 
-                        data-qty="<?= $stock->qty; ?>">
+                        data-qty="<?= $stock->unit_qty; ?>">
                       Detail</a>
-                    </div>
-                    <div class="col-md-6">
                       <form action="<?= site_url('stock/stockin_delete')?>" method="post">
-                        <input type="hidden" name="idproduct" value="<?= $stock->product_id?>">
+                        <input type="hidden" name="idproduct" value="<?= $stock->item_id?>">
                         <input type="hidden" name="idstock" value="<?= $stock->id?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
+                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
                       </form>
-                    </div>
                   </div>
     						</td>
     					</tr>
@@ -162,30 +159,39 @@
               <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= date('Y-m-d')?>" required>
             </div>
 					  <div class="form-group">
-            		<label>Nama Item: </label>
-                <input type="text" class="form-control" id="name" name="name">
-              </div>
-              <div class="form-group">
-                  <label for="unit_name">Initial Stock</label>
-                  <input type="text" name="stock" id="stock" class="form-control" value="-" readonly>
-                </div>
-					      <div class="form-group">
-           		 		<label>Detail: </label>
-                <textarea class="form-control" id="detail" name="detail">Input Detail</textarea> 
-              </div>
-                    <div class="form-group">
-                      <label>Supplier: </label>
-                      <select name="supplier" id="supplier" class="form-control">
-                      <option value="">-- Pilih Supplier --</option> 
-                        <?php foreach($suppliers as $supp){ ?>
-                          <option value="<?= $supp->id ?>"><?= $supp->name; ?></option>    
-                        <?php } ?>    
-                      </select>
+              <label>Item: </label>
+              <select name="item" id="item" class="form-control">
+              <option value="">-- Pilih Item --</option> 
+                <?php foreach($unititems as $item){ ?>
+                  <option value="<?= $item->id ?>"><?= $item->name ?> (<?= $item->unit ?>) </option>
+                <?php } ?>   
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="unit_name">Satuan Beli</label>
+              <input type="text" name="unit_name" id="unit_name" class="form-control">
+            </div>
+            <div class="form-group">
+            	<label>Qty Satuan: </label>
+						<input type="number" class="form-control" id="qty_unit" name="qty_unit" placeholder="Input Qty">
 					</div>
-                    <div class="form-group">
-            			<label>Qty: </label>
-						<input type="number" class="form-control" id="qty" name="qty" placeholder="Input Qty">
+          <div class="form-group">
+            	<label>Qty Item: </label>
+						<input type="number" class="form-control" id="qty_item" name="qty_item" placeholder="Input Qty">
 					</div>
+            <div class="form-group">
+              <label>Supplier: </label>
+              <select name="supplier" id="supplier" class="form-control">
+              <option value="">-- Pilih Supplier --</option> 
+                <?php foreach($suppliers as $supp){ ?>
+                  <option value="<?= $supp->id ?>"><?= $supp->name; ?></option>    
+                <?php } ?>    
+              </select>
+            </div>
+          <div class="form-group">
+                <label>Detail: </label>
+              <textarea class="form-control" id="detail" name="detail">Input Detail</textarea> 
+            </div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -280,17 +286,21 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on('click', '#selectstockin', function() {
-            var itemid = $(this).data('id');
-            var code = $(this).data('code');
-            var name = $(this).data('name');
-            var stock = $(this).data('stock');
-            $('#item_id').val(itemid);
-            $('#kode_barang').val(code);
-            $('#name').val(name);
-            $('#stock').val(stock);
-            $('#modal-item').modal('hide');
-        });
+      $('#item').on('change', function(e){
+        alert('ahha');
+      });
+
+      $(document).on('click', '#selectstockin', function() {
+          var itemid = $(this).data('id');
+          var code = $(this).data('code');
+          var name = $(this).data('name');
+          var stock = $(this).data('stock');
+          $('#item_id').val(itemid);
+          $('#kode_barang').val(code);
+          $('#name').val(name);
+          $('#stock').val(stock);
+          $('#modal-item').modal('hide');
+      });
 
         $(document).on('click', '#show_detail', function() {
             var stockid = $(this).data('id');

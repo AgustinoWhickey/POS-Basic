@@ -49,17 +49,11 @@
     						<td><?= $it->stock; ?></td>
     						<td><img src=<?= base_url('assets/img/upload/items/'.$it->image) ?> class="img" style="width:100px"></td>
     						<td>
-                  <div class="row">
-                    <div class="col-md-1">
-                      <a href="<?= base_url('itemmenu/edit/'.$it->id); ?>" class="badge badge-success">Edit</a>
-                    </div>
-                    <div class="col-md-6">
-                      <form action="<?= site_url('itemmenu/delete')?>" method="post">
-                        <input type="hidden" name="itemmenu_id" value="<?= $it->id?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
-                      </form>
-                    </div>
-                  </div>
+                    <a href="<?= base_url('itemmenu/edit/'.$it->id); ?>" class="btn btn-xs btn-info">Edit</a>
+                    <form action="<?= site_url('itemmenu/delete')?>" method="post">
+                      <input type="hidden" name="itemmenu_id" value="<?= $it->id?>">
+                      <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
+                    </form>
     						</td>
     					</tr>
     				<?php } ?>

@@ -45,17 +45,11 @@
     						<td><?= $us->email; ?></td>
     						<td><?= $us->is_active == 1 ? "Aktif" : "Tidak Aktif";  ?></td>
     						<td>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <a href="<?= base_url('user/edit/'.$us->id); ?>" class="badge badge-success">Edit</a>
-                    </div>
-                    <div class="col-md-6">
-                      <form action="<?= site_url('user/delete')?>" method="post">
-                        <input type="hidden" name="user_id" value="<?= $us->id?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
-                      </form>
-                    </div>
-                  </div>
+                  <a href="<?= base_url('user/edit/'.$us->id); ?>" class="btn btn-xs btn-info">Edit</a>
+                  <form action="<?= site_url('user/delete')?>" method="post">
+                    <input type="hidden" name="user_id" value="<?= $us->id?>">
+                    <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
+                  </form>
     						</td>
     					</tr>
     				<?php } ?>

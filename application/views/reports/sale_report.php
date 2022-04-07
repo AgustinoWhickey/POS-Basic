@@ -12,16 +12,11 @@
         <?php } ?>
         <?= $this->session->flashdata('message'); ?>
       </div>
-      <!-- <div class="col-lg-6 text-right">
-        <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newUserModal">
-          <i class="fa fa-user-plus"></i>  Tambah Kategori
-        </a>
-      </div> -->
     </div>
 
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Table Kategori</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Table Data Penjualan</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">

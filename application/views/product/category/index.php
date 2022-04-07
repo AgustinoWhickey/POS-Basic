@@ -38,20 +38,14 @@
     					foreach($categories as $cat){ 
 					  ?>
     					<tr>
-    						<th scope="row"><?= $i++; ?></th>
+    						<td scope="row" style="width:5%;"><?= $i++; ?></td>
     						<td><?= $cat->nama; ?></td>
     						<td>
-                  <div class="row">
-                    <div class="col-md-1">
-                      <a href="<?= base_url('category/edit/'.$cat->id); ?>" class="badge badge-success">Edit</a>
-                    </div>
-                    <div class="col-md-6">
-                      <form action="<?= site_url('category/delete')?>" method="post">
-                        <input type="hidden" name="category_id" value="<?= $cat->id?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
-                      </form>
-                    </div>
-                  </div>
+                  <a href="<?= base_url('category/edit/'.$cat->id); ?>" class="btn btn-xs btn-info">Edit</a>
+                  <form action="<?= site_url('category/delete')?>" method="post">
+                    <input type="hidden" name="category_id" value="<?= $cat->id?>">
+                    <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
+                  </form>
     						</td>
     					</tr>
     				<?php } ?>

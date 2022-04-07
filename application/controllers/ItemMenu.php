@@ -7,6 +7,7 @@ class ItemMenu extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Item_model','item_m');
+		$this->load->model('Item_menu_model','item_menu_m');
 		$this->load->model('Login_model','login_m');
 		$this->load->model('Category_model','category_m');
 		is_logged_in();
@@ -17,7 +18,6 @@ class ItemMenu extends CI_Controller {
 		$data['title'] 		= 'Item Management';
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['items'] 		= $this->item_m->getItems();
-		$data['category'] 	= $this->category_m->getCategories();
 
 		$this->form_validation->set_rules('name','Nama','required');
 
@@ -66,8 +66,7 @@ class ItemMenu extends CI_Controller {
 	public function edit($id_item)
 	{
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
-		$data['oneitem'] 	= $this->item_m->getItem($id_item);
-		$data['category'] 	= $this->category_m->getCategories();
+		$data['oneitem'] 	= $this->item_menu_m->getItem($id_item);
 		$data['title'] 		= 'Edit Item';
 
 		$this->form_validation->set_rules('nama','Nama','required|trim');

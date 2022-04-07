@@ -21,7 +21,7 @@
 
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Table User</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Table Supplier</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -47,17 +47,11 @@
     						<td><?= $sup->address; ?></td>
     						<td><?= $sup->description; ?></td>
     						<td>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <a href="<?= base_url('supplier/edit/'.$sup->id); ?>" class="badge badge-success">Edit</a>
-                    </div>
-                    <div class="col-md-6">
-                      <form action="<?= site_url('supplier/delete')?>" method="post">
-                        <input type="hidden" name="supplier_id" value="<?= $sup->id?>">
-                        <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="badge badge-danger">Delete</button>
-                      </form>
-                    </div>
-                  </div>
+                    <a href="<?= base_url('supplier/edit/'.$sup->id); ?>" class="btn btn-xs btn-info">Edit</a>
+                    <form action="<?= site_url('supplier/delete')?>" method="post">
+                      <input type="hidden" name="supplier_id" value="<?= $sup->id?>">
+                      <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
+                    </form>
     						</td>
     					</tr>
     				<?php } ?>

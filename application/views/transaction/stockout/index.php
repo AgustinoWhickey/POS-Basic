@@ -166,7 +166,7 @@
                             <td><?= indo_currency($item->price); ?></td>
                             <td><?= $item->stock; ?></td>
                             <td>
-                                <button class="btn btn-xs btn-info" id="selectstockout" data-id="<?= $item->id; ?>" data-code="<?= $item->barcode; ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
+                                <button class="btn btn-xs btn-info" id="selectstockout" data-id="<?= $item->id; ?>" data-price="<?= indo_currency($item->price); ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
                                     <i class="fa fa-check"></i> Pilih
                                 </button>
                             </td>
@@ -191,12 +191,12 @@
             <div class="modal-body table-responsive">
                 <table class="table table-bordered table-striped" id="table1">
                     <tr>
-                      <th>Kode</th>
-                      <td><span id="det_kode"></span></td>
-                    </tr>
-                    <tr>
                       <th>Nama</th>
                       <td><span id="det_nama"></span></td>
+                    </tr>
+                    <tr>
+                      <th>Harga</th>
+                      <td><span id="det_harga"></span></td>
                     </tr>
                     <tr>
                       <th>Qty</th>
@@ -220,7 +220,6 @@
     $(document).ready(function() {
         $(document).on('click', '#selectstockout', function() {
             var itemid = $(this).data('id');
-            var code = $(this).data('code');
             var name = $(this).data('name');
             var stock = $(this).data('stock');
             $('#item_id').val(itemid);
@@ -232,12 +231,10 @@
 
         $(document).on('click', '#show_detail', function() {
             var stockid = $(this).data('id');
-            var code = $(this).data('kode');
             var name = $(this).data('name');
             var detail = $(this).data('detail');
             var inputdate = $(this).data('inputdate');
             var qty = $(this).data('qty');
-            $('#det_kode').html(code);
             $('#det_nama').html(name);
             $('#det_qty').html(qty);
             $('#det_detail').html(detail);

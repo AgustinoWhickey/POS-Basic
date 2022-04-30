@@ -6,7 +6,9 @@ class Sale extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Product_Item_model','item_m');
+		$this->load->model('Product_item_model','item_m');
+		$this->load->model('Item_model','unit_item_m');
+		$this->load->model('Item_menu_model','item_menu_m');
 		$this->load->model('Login_model','login_m');
         $this->load->model('Sale_model','sale_m');
         $this->load->model('Stock_model','stock_m');
@@ -73,6 +75,7 @@ class Sale extends CI_Controller {
 	}
 
 	public function process_payment(){
+		$stockbahan = array();
 		$data = $this->input->post(null, TRUE);
 		$sale_id = $this->sale_m->add_sale($data);
 		$carts = $this->sale_m->getCart()->result();
@@ -88,9 +91,22 @@ class Sale extends CI_Controller {
 				)
 			);
 
+			$stocks = $this->item_menu_m->getMenuItem((int)$value->item_id);
+
+			foreach($stocks as $stock){
+				$stockout = [
+					'item_id' => (int)$stock->item_id,
+					'qty' => $stock->qty,
+				];
+				$this->unit_item_m->updateitemstockout($stockout);
+
+				$newstock = $this->unit_item_m->getItem((int)$stock->item_id);
+				array_push($stockbahan, intval($newstock->stock/$stock->qty));
+			} 
+
 			$stockout = [
 				'item_id' => $value->item_id,
-				'qty' => $value->qty,
+				'qty' => min($stockbahan),
 			];
 			$this->item_m->updatestockout($stockout);
 		}

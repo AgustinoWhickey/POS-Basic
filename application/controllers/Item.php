@@ -6,7 +6,7 @@ class Item extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Product_Item_model','item_m');
+		$this->load->model('Product_item_model','item_m');
 		$this->load->model('Item_model','unit_item_m');
 		$this->load->model('Item_menu_model','item_menu_m');
 		$this->load->model('Login_model','login_m');
@@ -67,6 +67,7 @@ class Item extends CI_Controller {
 			$this->load->view("product/item/index",$data);
 			$this->load->view("templates/footer");
 		} else {
+
 			$image = '';
 			$upload_image = $_FILES['image']['name'];
 
@@ -86,12 +87,22 @@ class Item extends CI_Controller {
 				}
 			}
 
+			$stockbahan = array();
+			for($i=1;$i<=8;$i++){
+				$bahan = 'bahan'.$i;
+				$quantity = 'qty'.$i;
+				if($this->input->post($bahan) != ''){
+					$stock = $this->unit_item_m->getItem((int)$this->input->post($bahan));
+					array_push($stockbahan, intval($stock->stock/(int)$this->input->post($quantity)));
+				}
+			}
+
 			$data = [
 				'barcode' => htmlspecialchars($this->input->post('barcode',true)),
 				'name' => htmlspecialchars($this->input->post('name',true)),
 				'category_id' => htmlspecialchars($this->input->post('kategori',true)),
 				'price' => htmlspecialchars($this->input->post('harga',true)),
-				'stock' => htmlspecialchars($this->input->post('stock',true)),
+				'stock' => min($stockbahan),
 				'image' => $image,
 				'created' => time()
 			];
@@ -193,9 +204,9 @@ class Item extends CI_Controller {
 					];
 				}
 
-				$cek = $this->item_menu_m->getMenuItem((int)$this->input->post('item_id'));
+				$cek = $this->item_menu_m->getMenuItem((int)$this->input->post('item_id'), (int)$this->input->post($bahan));
 
-				if(count($cek) > 0 ){
+				if($cek){
 					$this->item_menu_m->updatemenuitem($databahan);
 				} else {
 					$this->db->insert('menu_item', $databahan);
@@ -218,7 +229,7 @@ class Item extends CI_Controller {
 	public function delete()
 	{
 		$id = $this->input->post('item_id');
-		
+
 		$this->item_m->deleteItem($id);
 		$this->item_menu_m->deleteMenuItem($id);
 

@@ -38,7 +38,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="<?= base_url('category'); ?>">Kategori</a>
           <a class="collapse-item" href="<?= base_url('item'); ?>">Menu</a>
-          <a class="collapse-item" href="<?= base_url('itemmenu'); ?>">Item</a>
+          <a class="collapse-item" href="<?= base_url('itemMenu'); ?>">Item</a>
         </div>
       </div>
     </li>

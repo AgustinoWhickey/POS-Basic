@@ -55,7 +55,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" style="width:200%;margin-left:-40%;">
 			<div class="modal-header">
-				<h5 class="modal-title" id="newMenuModalLabel">Tambah Kategori</h5>
+				<h5 class="modal-title" id="newMenuModalLabel">Tambah Product</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"></span>
 				</button>
@@ -85,10 +85,10 @@
                   <label>Harga: </label>
                   <input type="number" class="form-control" id="harga" name="harga" placeholder="Input Harga">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>Stock: </label>
                   <input type="number" class="form-control" id="stock" name="stock" placeholder="Input Stock">
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label>Gambar: </label>
                   <div class="custom-file">

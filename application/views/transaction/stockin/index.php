@@ -44,7 +44,7 @@
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
     						<td><?= $stock->product_name; ?></td>
-    						<td><?= $stock->price; ?></td>
+    						<td><?= indo_currency($stock->price); ?></td>
                 <td><?= $stock->unit; ?></td>
     						<td><?= $stock->unit_qty; ?></td>
     						<td><?= date("d-m-Y",$stock->date); ?></td>
@@ -52,6 +52,7 @@
                       <a data-toggle="modal" id="show_detail" href="#modal-detail" class="btn btn-xs btn-info" 
                         data-id="<?= $stock->id; ?>" 
                         data-name="<?= $stock->product_name; ?>" 
+                        data-price="<?= indo_currency($stock->price); ?>" 
                         data-detail="<?= $stock->detail; ?>" 
                         data-supplier="<?= $stock->supplier_name; ?>" 
                         data-inputdate="<?= date("d-m-Y",$stock->date); ?>" 
@@ -230,7 +231,7 @@
                             <td><?= indo_currency($item->price); ?></td>
                             <td><?= $item->stock; ?></td>
                             <td>
-                                <button class="btn btn-xs btn-info" id="selectstockin" data-id="<?= $item->id; ?>" data-code="<?= $item->barcode; ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
+                                <button class="btn btn-xs btn-info" id="selectstockin" data-id="<?= $item->id; ?>" data-price="<?= indo_currency($item->price); ?>" data-name="<?= $item->name; ?>" data-stock="<?= $item->stock; ?>">
                                     <i class="fa fa-check"></i> Pilih
                                 </button>
                             </td>
@@ -255,12 +256,12 @@
             <div class="modal-body table-responsive">
                 <table class="table table-bordered table-striped" id="table1">
                     <tr>
-                      <th>Kode</th>
-                      <td><span id="det_kode"></span></td>
-                    </tr>
-                    <tr>
                       <th>Nama</th>
                       <td><span id="det_nama"></span></td>
+                    </tr>
+                    <tr>
+                      <th>Harga</th>
+                      <td><span id="det_price"></span></td>
                     </tr>
                     <tr>
                       <th>Supplier</th>
@@ -292,11 +293,11 @@
 
       $(document).on('click', '#selectstockin', function() {
           var itemid = $(this).data('id');
-          var code = $(this).data('code');
+          var price = $(this).data('price');
           var name = $(this).data('name');
           var stock = $(this).data('stock');
           $('#item_id').val(itemid);
-          $('#kode_barang').val(code);
+          $('#price').val(price);
           $('#name').val(name);
           $('#stock').val(stock);
           $('#modal-item').modal('hide');
@@ -304,13 +305,13 @@
 
         $(document).on('click', '#show_detail', function() {
             var stockid = $(this).data('id');
-            var code = $(this).data('kode');
+            var price = $(this).data('price');
             var name = $(this).data('name');
             var supplier = $(this).data('supplier');
             var detail = $(this).data('detail');
             var inputdate = $(this).data('inputdate');
             var qty = $(this).data('qty');
-            $('#det_kode').html(code);
+            $('#det_price').html(price);
             $('#det_nama').html(name);
             $('#det_supplier').html(supplier);
             $('#det_qty').html(qty);

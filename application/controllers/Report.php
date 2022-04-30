@@ -6,7 +6,7 @@ class Report extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Product_Item_model','item_m');
+		$this->load->model('Product_item_model','item_m');
 		$this->load->model('Login_model','login_m');
         $this->load->model('Sale_model','sale_m');
         $this->load->model('Stock_model','stock_m');
@@ -27,10 +27,36 @@ class Report extends CI_Controller {
 	
 	}
 
+    function test(){
+        $list = $this->sale_m->get_datatables_range_date('1647685510', '1647685510');
+        // $countAll = $this->sale_m->count_all_range_date();
+        // $countFiltered = $this->sale_m->count_filtered_range_date('1647685510', '1647685510');
+
+        $list2 = $this->sale_m->get_datatables();
+        $countAll2 = $this->sale_m->count_all();
+        $countFiltered2 = $this->sale_m->count_filtered();
+
+        print_r($countFiltered2);
+    }
+
     function get_ajax_sale() {
         $list = $this->sale_m->get_datatables();
+        $countAll = $this->sale_m->count_all();
+        $countFiltered = $this->sale_m->count_filtered();
         $data = array();
         $no = @$_POST['start'];
+        
+        if($_POST['searchByFromdate'] != '' && $_POST['searchByTodate'] != ''){
+            $fromDate = strtotime($_POST['searchByFromdate']);
+            $toDate = strtotime($_POST['searchByTodate']);
+
+            if($fromDate != '' && $toDate != ''){
+                $list = $this->sale_m->get_datatables_range_date($fromDate, $toDate);
+                $countAll = $this->sale_m->count_all_range_date();
+                $countFiltered = $this->sale_m->count_filtered_range_date($fromDate, $toDate);
+            }
+        }
+
         foreach ($list as $item) {
             $no++;
             $row = array();
@@ -50,8 +76,8 @@ class Report extends CI_Controller {
         }
         $output = array(
                     "draw" => @$_POST['draw'],
-                    "recordsTotal" => $this->sale_m->count_all(),
-                    "recordsFiltered" => $this->sale_m->count_filtered(),
+                    "recordsTotal" => $countAll,
+                    "recordsFiltered" => $countFiltered,
                     "data" => $data,
                 );
         // output to json format

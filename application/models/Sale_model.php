@@ -171,6 +171,7 @@ class Sale_model extends CI_Model
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
+
     function get_datatables() {
         $this->_get_datatables_query();
         if(@$_POST['length'] != -1)
@@ -184,6 +185,55 @@ class Sale_model extends CI_Model
         return $query->num_rows();
     }
     function count_all() {
+        $this->db->from('sale');
+        return $this->db->count_all_results();
+	}
+	// end datatables
+
+    // start datatables
+ 
+    private function _get_datatables_range_date_query($todate, $fromdate) {
+        $this->db->select('sale.*, user.name as user_name, sale.created as sale_created');
+        $this->db->from('sale');
+        $this->db->join('user', 'sale.user_id = user.id');
+        $this->db->where('sale.created <=', (int)$todate);
+        $this->db->where('sale.created >=', (int)$fromdate);
+        $i = 0;
+        foreach ($this->column_search as $item) { 
+            if(@$_POST['search']['value']) { 
+                if($i===0) { 
+                    $this->db->group_start(); 
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+                if(count($this->column_search) - 1 == $i) 
+                    $this->db->group_end(); 
+            }
+            $i++;
+        }
+         
+        if(isset($_POST['order'])) { 
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        }  else if(isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+    
+    function get_datatables_range_date($todate, $fromdate) {
+        $this->_get_datatables_range_date_query($todate, $fromdate);
+        if(@$_POST['length'] != -1)
+        $this->db->limit(@$_POST['length'], @$_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function count_filtered_range_date($todate, $fromdate) {
+        $this->_get_datatables_range_date_query($todate, $fromdate);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    function count_all_range_date() {
         $this->db->from('sale');
         return $this->db->count_all_results();
 	}

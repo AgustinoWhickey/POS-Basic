@@ -6,7 +6,7 @@ class Stock extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Product_Item_model','item_m');
+		$this->load->model('Product_item_model','item_m');
 		$this->load->model('Item_model','unit_item_m');
 		$this->load->model('Login_model','login_m');
         $this->load->model('Supplier_model','supplier_m');

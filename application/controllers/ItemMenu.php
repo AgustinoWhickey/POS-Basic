@@ -66,7 +66,7 @@ class ItemMenu extends CI_Controller {
 	public function edit($id_item)
 	{
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
-		$data['oneitem'] 	= $this->item_menu_m->getItem($id_item);
+		$data['oneitem'] 	= $this->item_m->getItem($id_item);
 		$data['title'] 		= 'Edit Item';
 
 		$this->form_validation->set_rules('nama','Nama','required|trim');

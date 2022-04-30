@@ -55,12 +55,19 @@
 
   <script>
     $(document).ready(function() {
-        $('#reportTable').DataTable( {
+        var reportTable = $('#reportTable').DataTable( {
           "processing": true,
           "serverSide": true,
           "ajax": {
               "url": "<?= site_url('report/get_ajax_sale'); ?>",
-              "type": "POST"
+              "type": "POST",
+              "data": function(data){
+                var from_date = $('.date_range_filter').val();
+                var to_date = $('.date_range_filter2').val();
+
+                data.searchByFromdate = from_date;
+                data.searchByTodate = to_date;
+              },
           },
           "columnDefs": [
             {
@@ -80,11 +87,128 @@
                     $(win.document.body)
                         .css( 'font-size', '10pt' )
                 }
-            }
+              }
             ],
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api();
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 5 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 5, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 5 ).footer() ).html(
+                    // 'Total Pembayaran: '+pageTotal +' ( $'+ total +' total)'
+                    'Total Pembayaran: Rp. '+total
+                );
+            }
+          });
+          // var arrSalePrice = reportTable.column(1).data();
+          // var arrSalePrice = reportTable.column(1, { page: 'current'}).data().reduce( function (a,b) { return a + b;});
+          // var totalSalePrice = arrSalePrice.reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+          // console.log(arrSalePrice);
+
+          // $("#reportTable tfoot").find('td').eq(5).text(arrSalePrice);
         });
-    } );
+
+        $(document).on('click', '#datesearch', function(){
+          $('#reportTable').DataTable().destroy();
+          $('#reportTable tbody').empty();
+          // $('#reportTable tfoot').empty();
+
+          $('#reportTable').DataTable( {
+          "processing": true,
+          "serverSide": true,
+          "ajax": {
+              "url": "<?= site_url('report/get_ajax_sale'); ?>",
+              "type": "POST",
+              "data": function(data){
+                var from_date = $('.date_range_filter2').val();
+                var to_date = $('.date_range_filter').val();
+
+                data.searchByFromdate = from_date;
+                data.searchByTodate = to_date;
+              },
+          },
+          "columnDefs": [
+            {
+            "targets": [4,5],
+            "className": 'text-right'
+            },
+            {
+            "targets": [6],
+            "className": 'text-center'
+            }
+          ],
+            "dom": 'Bfrtip',
+            "buttons": [
+              {
+                extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                }
+              }
+            ],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api();
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 5 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 5, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 5 ).footer() ).html(
+                    // 'Total Pembayaran: '+pageTotal +' ( $'+ total +' total)'
+                    'Total Pembayaran: Rp. '+total
+                );
+            }
+          });
+        });
+
+        
 
     $('.custom-file-input').on('change',function(){
       let filename = $(this).val().split('\\').pop();

@@ -19,6 +19,27 @@
         <h6 class="m-0 font-weight-bold text-primary">Table Data Penjualan</h6>
       </div>
       <div class="card-body">
+        <div class="col-md-12" style="margin-bottom: 20px">
+          <div class="row">
+            <div class="col-md-2">
+              <span>Pilih dari tanggal</span>
+              <div class="input-group" >
+                <input type="text" class="form-control date_range_filter pickdate">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <span>Sampai tanggal</span>
+              <div class="input-group">
+                <input type="text" class="form-control pickdate date_range_filter2">
+              </div>
+            </div>
+            <div class="col-md-2">
+            <button id="datesearch" style="margin-top:22px;" class="btn btn-xs btn-success">
+                Cari
+            </button>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered display" id="reportTable" width="100%" cellspacing="0">
             <thead>
@@ -33,7 +54,13 @@
             </thead>
             <tbody>
     				
-    			</tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                  <th colspan="6" style="text-align:right">Total:</th>
+                  <th></th>
+              </tr>
+          </tfoot>
           </table>
         </div>
       </div>
@@ -120,4 +147,41 @@
             $('#product').html(product);
         });
     });
+
+    $('.date_range_filter').datetimepicker({
+      i18n:{
+        de:{
+        months:[
+          'Januar','Februar','März','April',
+          'Mai','Juni','Juli','August',
+          'September','Oktober','November','Dezember',
+        ],
+        dayOfWeek:[
+          "So.", "Mo", "Di", "Mi",
+          "Do", "Fr", "Sa.",
+        ]
+        }
+      },
+      timepicker:false,
+      format: 'd-m-Y',
+    });
+
+    $('.date_range_filter2').datetimepicker({
+      i18n:{
+        de:{
+        months:[
+          'Januar','Februar','März','April',
+          'Mai','Juni','Juli','August',
+          'September','Oktober','November','Dezember',
+        ],
+        dayOfWeek:[
+          "So.", "Mo", "Di", "Mi",
+          "Do", "Fr", "Sa.",
+        ]
+        }
+      },
+      timepicker:false,
+      format: 'd-m-Y',
+    });
+
 </script>

@@ -25,13 +25,13 @@ class Item_menu_model extends CI_Model
 		return $this->db->affected_rows();
     }
 
-    public function getMenuItem($idproduct)
+    public function getMenuItem($idproduct, $item = null)
     {
         $this->db->select('*');
         $this->db->where('product_id', $idproduct);
-        // if($idproduct != null){
-        //     $this->db->where('product_id', $idproduct);
-        // }
+        if($item != null){
+            $this->db->where('item_id', $item);
+        }
         $aksi = $this->db->get('menu_item')->result();
         return $aksi;
     }

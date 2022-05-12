@@ -42,6 +42,7 @@
     <div class="content">
         <div class="title">
             <b>The Tea</b>
+            <br><img src="<?= base_url('assets/img/favicon.png') ?>" style="width:20%;">
         </div>
         <div class="head">
             <table cellspacing="0" cellpadding="0">
@@ -72,7 +73,7 @@
                             <td><?= $value->name ?></td>
                             <td><?= $value->qty ?></td>
                             <td style="text-align:right;"><?= indo_currency($value->price)?></td>
-                            <td style="text-align:right;"><?= indo_currency($value->price - $value->discount_item)?></td>
+                            <td style="text-align:right;"><?= indo_currency($value->total - $value->discount_item)?></td>
                         </tr> 
                         <?php
                             if($value->discount_item > 0) {
@@ -106,17 +107,19 @@
                         <tr>
                             <td colspan="2"></td>
                             <td style="border-top:1px dashed; text-align:right; padding-top:5px">Cash</td>
-                            <td style="border-top:1px dashed; text-align:right; padding-top:5px"><?= $sale->cash ?></td>
+                            <td style="border-top:1px dashed; text-align:right; padding-top:5px"><?= indo_currency($sale->cash) ?></td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td style="text-align:right">Change</td>
-                            <td style="text-align:right"><?= $sale->remaining?></td>
+                            <td style="text-align:right"><?= indo_currency($sale->remaining) ?></td>
                         </tr>
             </table>
         </div>
         <div class="thanks">
-            The Tea<br>thetea.co.id
+            The Tea <br>
+            <br><img src="<?= base_url('assets/img/qrcode.jpg') ?>" style="width:20%;">
+            <br>thetea.co.id
         </div>
     </div>
 </body>

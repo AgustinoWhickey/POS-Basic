@@ -50,7 +50,6 @@ class ItemMenu extends CI_Controller {
 			$data = [
 				'name' => htmlspecialchars($this->input->post('name',true)),
 				'unit' => htmlspecialchars($this->input->post('unit',true)),
-				'price' => htmlspecialchars($this->input->post('harga',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
 				'image' => $image,
 				'created' => time()
@@ -110,7 +109,6 @@ class ItemMenu extends CI_Controller {
 				'id' => $this->input->post('item_id'),
 				'name' => htmlspecialchars($this->input->post('nama',true)),
 				'unit' => htmlspecialchars($this->input->post('unit',true)),
-				'price' => htmlspecialchars($this->input->post('price',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
 				'image' => $image,
 				'updated' => time()

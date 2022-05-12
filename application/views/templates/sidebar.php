@@ -3,17 +3,18 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-      <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-code"></i>
+      <div class="sidebar-brand-icon">
+        <img src="<?= base_url('assets/img/logo2.png') ?>" style="width: 88%;margin-left: -14px;margin-top: 22px;">
+        <!-- <i class="fas fa-code"></i> -->
       </div>
-      <div class="sidebar-brand-text mx-3">Point of Sales </div>
+      <!-- <div class="sidebar-brand-text mx-3">Point of Sales </div> -->
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider" style="border:none;">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading" style="margin-top: 20px;">
       <b>Main Navigation</b>
     </div>
 
@@ -66,7 +67,7 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url('report/sales'); ?>">Sales</a>
-            <a class="collapse-item" href="<?= base_url('report/stocks'); ?>">Stocks</a>
+            <a class="collapse-item" href="<?= base_url('stockreport'); ?>">Stocks</a>
           </div>
         </div>
       </li>

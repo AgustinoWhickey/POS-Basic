@@ -30,9 +30,8 @@
               <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Unit</th>
-                <th>Price</th>
                 <th>Stock</th>
+                <th>Unit</th>
                 <th>Gambar</th>
                 <th>Aksi</th>
             </thead>
@@ -44,9 +43,8 @@
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
     						<td><?= $it->name; ?></td>
+                <td><?= $it->stock; ?></td>
     						<td><?= $it->unit; ?></td>
-    						<td><?= $it->price; ?></td>
-    						<td><?= $it->stock; ?></td>
     						<td><img src=<?= base_url('assets/img/upload/items/'.$it->image) ?> class="img" style="width:100px"></td>
     						<td>
                     <a href="<?= base_url('itemmenu/edit/'.$it->id); ?>" class="btn btn-xs btn-info">Edit</a>
@@ -87,10 +85,6 @@
           <div class="form-group">
             <label>Unit: </label>
 						<input type="text" class="form-control" id="unit" name="unit" placeholder="Input Unit">
-					</div>
-          <div class="form-group">
-            <label>Harga: </label>
-						<input type="number" class="form-control" id="harga" name="harga" placeholder="Input Harga">
 					</div>
           <div class="form-group">
             <label>Stock: </label>

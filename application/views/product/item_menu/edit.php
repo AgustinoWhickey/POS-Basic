@@ -32,13 +32,6 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="nama" class="col-sm-2 col-form-label">Harga</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" id="price" name="price" value="<?= $oneitem->price; ?>" >
-				          <?= form_error('nama','<small class="text-danger pl-3">','</small>'); ?>
-                </div>
-              </div>
-              <div class="form-group row">
                 <label for="nama" class="col-sm-2 col-form-label">Stock</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control" id="stock" name="stock" value="<?= $oneitem->stock; ?>" >

@@ -18,10 +18,13 @@ class Admin extends CI_Controller {
 					INNER JOIN sale ON sale_detail.sale_id = sale.id
 					INNER JOIN product_item ON sale_detail.item_id = product_item.id
 				GROUP BY sale_detail.item_id
-				ORDER BY sold DESC
-				LIMIT 10");
+				ORDER BY sold DESC");
 
 		$result = $query->result();
+
+		$query2 = $this->db->query("SELECT SUM(unit_qty * unit_price) AS outcome FROM stock_item");
+
+		$result2 = $query2->result();
 
 		$total_penjualan = 0;
 		$total_item_terjual = 0;
@@ -34,6 +37,7 @@ class Admin extends CI_Controller {
 		$data['user'] 	= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['total_penjualan'] = indo_currency($total_penjualan);
 		$data['total_item_terjual'] = $total_item_terjual;
+		$data['total_pengeluaran'] = indo_currency($result2[0]->outcome);
 		$data['title'] 	= 'Dashboard';
 
 		$this->load->view("templates/header",$data);

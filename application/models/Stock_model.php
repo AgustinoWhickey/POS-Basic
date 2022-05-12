@@ -2,6 +2,18 @@
 
 class Stock_model extends CI_Model
 {
+
+    public function getStocks()
+    {
+        $this->db->select('stock.*, product_category.nama as category_name, product_item.name as item_name, user.name as user_name');
+        $this->db->from('stock');
+        $this->db->join('product_item','product_item.id = stock.item_id');
+        $this->db->join('product_category','product_category.id = product_item.category_id','left');
+        $this->db->join('user','user.id = stock.user_id');
+
+        return $this->db->get()->result();
+    }
+
     public function getStockIns()
     {
         $this->db->select('stock.*, product_item.id as product_id, product_item.name as product_name, product_item.barcode as product_barcode, supplier.name as supplier_name, user.name as user_name');
@@ -16,7 +28,7 @@ class Stock_model extends CI_Model
 
     public function getStockItemIns()
     {
-        $this->db->select('stock_item.*, item.id as item_id, item.price as price, item.name as product_name, supplier.name as supplier_name, user.name as user_name');
+        $this->db->select('stock_item.*, item.id as item_id, item.name as product_name, supplier.name as supplier_name, user.name as user_name');
         $this->db->from('stock_item');
         $this->db->join('item','item.id = stock_item.item_id');
         $this->db->join('supplier','supplier.id = stock_item.supplier_id','left');

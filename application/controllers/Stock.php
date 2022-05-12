@@ -41,6 +41,7 @@ class Stock extends CI_Controller {
 				'supplier_id' => htmlspecialchars($this->input->post('supplier',true)),
 				'unit' => htmlspecialchars($this->input->post('unit_name',true)),
 				'unit_qty' => htmlspecialchars($this->input->post('qty_unit',true)),
+				'unit_price' => htmlspecialchars($this->input->post('qty_price',true)),
 				'item_qty' => htmlspecialchars($this->input->post('qty_item',true)),
 				'user_id' => $this->session->userdata('user_id'),
 				'date' => strtotime($this->input->post('tanggal')),

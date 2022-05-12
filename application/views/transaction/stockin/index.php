@@ -44,7 +44,7 @@
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
     						<td><?= $stock->product_name; ?></td>
-    						<td><?= indo_currency($stock->price); ?></td>
+    						<td><?= indo_currency($stock->unit_price); ?></td>
                 <td><?= $stock->unit; ?></td>
     						<td><?= $stock->unit_qty; ?></td>
     						<td><?= date("d-m-Y",$stock->date); ?></td>
@@ -52,7 +52,7 @@
                       <a data-toggle="modal" id="show_detail" href="#modal-detail" class="btn btn-xs btn-info" 
                         data-id="<?= $stock->id; ?>" 
                         data-name="<?= $stock->product_name; ?>" 
-                        data-price="<?= indo_currency($stock->price); ?>" 
+                        data-price="<?= indo_currency($stock->unit_price); ?>" 
                         data-detail="<?= $stock->detail; ?>" 
                         data-supplier="<?= $stock->supplier_name; ?>" 
                         data-inputdate="<?= date("d-m-Y",$stock->date); ?>" 
@@ -177,6 +177,10 @@
 						<input type="number" class="form-control" id="qty_unit" name="qty_unit" placeholder="Input Qty">
 					</div>
           <div class="form-group">
+            	<label>Harga Satuan: </label>
+						<input type="number" class="form-control" id="qty_price" name="qty_price" placeholder="Input Harga Qty">
+					</div>
+          <div class="form-group">
             	<label>Qty Item: </label>
 						<input type="number" class="form-control" id="qty_item" name="qty_item" placeholder="Input Qty">
 					</div>
@@ -287,9 +291,6 @@
 
 <script>
     $(document).ready(function() {
-      $('#item').on('change', function(e){
-        alert('ahha');
-      });
 
       $(document).on('click', '#selectstockin', function() {
           var itemid = $(this).data('id');

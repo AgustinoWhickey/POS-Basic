@@ -49,7 +49,10 @@ class Stock extends CI_Controller {
 			];
 
 			$this->db->insert('stock_item', $data); 
-			// $this->stock_m->updatestockproduct($data);
+			if($this->db->affected_rows() > 0){
+				$this->stock_m->addstockitem($data);
+				update_stock($data);
+			}
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Baru Berhasil Ditambahkan!</div>');
 			redirect('stock/stockin');
 		}
@@ -59,23 +62,27 @@ class Stock extends CI_Controller {
 	public function stockin_delete()
 	{
 		$idstock 	= $this->input->post('idstock');
-		$idproduct 	= $this->input->post('idproduct');
-		$getstock 	= $this->stock_m->getStock($idstock)->qty;
+		$iditem 	= $this->input->post('idproduct');
+		$getstock 	= $this->stock_m->getStockItem($idstock);
+
+		$newstock = (int)$getstock->unit_qty * (int)$getstock->item_qty; 
 
 		$data = [
-			'item_id' => $idproduct,
-			'qty' =>$getstock,
+			'item_id' => $iditem,
+			'qty' =>$newstock,
 		];
-		$this->item_m->updatestockout($data);
+		$this->stock_m->updatestockoutitem($data);
 		$this->stock_m->deleteStock($idstock);
+		update_stock($data);
 
 		if($this->db->affected_rows() > 0){
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Berhasil Dihapus!</div>');
 			redirect('stock/stockin');
-		} else {
-			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Hapus Stock Baru Gagal! Silahkan Coba Lagi!</div>');
-			redirect('stock/stockin');
-		}
+		} 
+		// else {
+		// 	$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Hapus Stock Baru Gagal! Silahkan Coba Lagi!</div>');
+		// 	redirect('stock/stockin');
+		// }
 	}
 
 	public function stockout()

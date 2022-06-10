@@ -30,9 +30,9 @@
               <tr>
                 <th>No</th>
                 <th>Produk Item</th>
-                <th>Harga</th>
-                <th>Unit</th>
-                <th>Qty</th>
+                <th>Unit Qty</th>
+                <th>Harga Per Qty</th>
+                <th>Unit Per Item</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
             </thead>
@@ -44,14 +44,17 @@
     					<tr>
     						<th scope="row"><?= $i++; ?></th>
     						<td><?= $stock->product_name; ?></td>
-    						<td><?= indo_currency($stock->unit_price); ?></td>
-                <td><?= $stock->unit; ?></td>
-    						<td><?= $stock->unit_qty; ?></td>
+                <td><?= $stock->unit_qty.' '.$stock->unit; ?></td>
+                <td><?= indo_currency($stock->unit_price); ?></td>
+    						<td><?= $stock->item_qty.' '.$stock->item_unit; ?></td>
     						<td><?= date("d-m-Y",$stock->date); ?></td>
     						<td>
                       <a data-toggle="modal" id="show_detail" href="#modal-detail" class="btn btn-xs btn-info" 
                         data-id="<?= $stock->id; ?>" 
                         data-name="<?= $stock->product_name; ?>" 
+                        data-unit="<?= $stock->unit; ?>" 
+                        data-item-qty="<?= $stock->item_qty; ?>" 
+                        data-item-unit="<?= $stock->item_unit; ?>" 
                         data-price="<?= indo_currency($stock->unit_price); ?>" 
                         data-detail="<?= $stock->detail; ?>" 
                         data-supplier="<?= $stock->supplier_name; ?>" 
@@ -276,6 +279,10 @@
                       <td><span id="det_qty"></span></td>
                     </tr>
                     <tr>
+                      <th>Unit Qty</th>
+                      <td><span id="det_unit_qty"></span></td>
+                    </tr>
+                    <tr>
                       <th>Detail</th>
                       <td><span id="det_detail"></span></td>
                     </tr>
@@ -308,6 +315,9 @@
             var stockid = $(this).data('id');
             var price = $(this).data('price');
             var name = $(this).data('name');
+            var unit = $(this).data('unit');
+            var itemunit = $(this).data('item-unit');
+            var itemqty = $(this).data('item-qty');
             var supplier = $(this).data('supplier');
             var detail = $(this).data('detail');
             var inputdate = $(this).data('inputdate');
@@ -315,7 +325,8 @@
             $('#det_price').html(price);
             $('#det_nama').html(name);
             $('#det_supplier').html(supplier);
-            $('#det_qty').html(qty);
+            $('#det_qty').html(qty+' '+unit);
+            $('#det_unit_qty').html((qty*itemqty)+' '+itemunit);
             $('#det_detail').html(detail);
             $('#det_inputdate').html(inputdate);
         });

@@ -70,6 +70,7 @@
 		$sql = "UPDATE product_item SET stock = '$newstock' WHERE id = '$prodid'";
 
         $ci->db->query($sql);
+		$stockbahan = array();
 	}
 
 	return $ci->db->affected_rows() == 1;

@@ -267,7 +267,7 @@
                       <td><span id="det_nama"></span></td>
                     </tr>
                     <tr>
-                      <th>Harga</th>
+                      <th>Harga per Qty</th>
                       <td><span id="det_price"></span></td>
                     </tr>
                     <tr>

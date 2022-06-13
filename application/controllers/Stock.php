@@ -75,10 +75,13 @@ class Stock extends CI_Controller {
 		$this->stock_m->deleteStock($idstock);
 		update_stock($data);
 
-		if($this->db->affected_rows() > 0){
-			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Berhasil Dihapus!</div>');
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Berhasil Dihapus!</div>');
 			redirect('stock/stockin');
-		} 
+
+		// if($this->db->affected_rows() > 0){
+		// 	$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Stock Berhasil Dihapus!</div>');
+		// 	redirect('stock/stockin');
+		// } 
 		// else {
 		// 	$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Hapus Stock Baru Gagal! Silahkan Coba Lagi!</div>');
 		// 	redirect('stock/stockin');

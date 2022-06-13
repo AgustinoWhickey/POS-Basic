@@ -88,6 +88,8 @@ class Sale extends CI_Controller {
 				'qty' => $value->qty,
 				'discount_item' => $value->discount_item,
 				'total' => $value->total,
+				'user_id' => $this->session->userdata('user_id'),
+				'created' => time()
 				)
 			);
 
@@ -106,7 +108,7 @@ class Sale extends CI_Controller {
 
 			$stockout = [
 				'item_id' => $value->item_id,
-				'qty' => min($stockbahan),
+				'qty' => $value->qty,
 			];
 			$this->item_m->updatestockout($stockout);
 		}

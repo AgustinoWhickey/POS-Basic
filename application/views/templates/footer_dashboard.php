@@ -1,4 +1,5 @@
- <!-- Footer -->
+
+<!-- Footer -->
  <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -42,7 +43,7 @@
   $barang=array();
   $terjual=array();
   foreach($chart as $val) {
-    array_push($barang, $val->name);
+    array_push($barang, date('d M',$val->date));
     array_push($terjual, $val->sold);
   }
   $listbarang = json_encode($barang);

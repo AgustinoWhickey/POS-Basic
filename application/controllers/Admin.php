@@ -13,10 +13,11 @@ class Admin extends CI_Controller {
 	
 	public function index()
 	{
-		$query = $this->db->query("SELECT sale_detail.id AS saleid, sale.created, product_item.name, (SELECT SUM(sale_detail.qty)) AS sold, (SELECT SUM(sale.total_price)) AS total_penjualan
+		$query = $this->db->query("SELECT sale_detail.id AS saleid, sale.date, product_item.name, (SELECT SUM(sale_detail.qty)) AS sold, (SELECT SUM(sale.total_price)) AS total_penjualan
 				FROM sale_detail
 					INNER JOIN sale ON sale_detail.sale_id = sale.id
 					INNER JOIN product_item ON sale_detail.item_id = product_item.id
+				WHERE (DATE_FORMAT(FROM_UNIXTIME(sale.created), '%m')) >= MONTH(CURRENT_DATE())
 				GROUP BY sale_detail.item_id
 				ORDER BY sold DESC");
 		$result = $query->result();
@@ -33,12 +34,12 @@ class Admin extends CI_Controller {
 				FROM sale_detail
 					INNER JOIN sale ON sale_detail.sale_id = sale.id
 					INNER JOIN product_item ON sale_detail.item_id = product_item.id
-				WHERE (DATE_FORMAT(FROM_UNIXTIME(sale.created), '%m')) = '05'
+				WHERE (DATE_FORMAT(FROM_UNIXTIME(sale.created), '%m')) = MONTH(CURRENT_DATE())
 				GROUP BY sale_detail.item_id
 				ORDER BY sold DESC");
 		$result3 = $query3->result();
 
-		$query4 = $this->db->query("SELECT SUM(CASE WHEN DATE_FORMAT(FROM_UNIXTIME(created), '%m') = '05' THEN 0 ELSE unit_qty * unit_price END) AS outcome FROM stock_item");
+		$query4 = $this->db->query("SELECT SUM(CASE WHEN DATE_FORMAT(FROM_UNIXTIME(created), '%m') = MONTH(CURRENT_DATE()) THEN 0 ELSE unit_qty * unit_price END) AS outcome FROM stock_item");
 		$result4 = $query4->result();
 
 		$total_penjualan = 0;

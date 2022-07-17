@@ -95,7 +95,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 var list = <?=$listbarang?>;
 var terjual = <?=$listterjual?>;
-console.log(list);
+console.log(terjual);
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',

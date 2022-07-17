@@ -57,7 +57,7 @@ class ItemMenu extends CI_Controller {
 
 			$this->db->insert('item', $data); 
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Item Baru Berhasil Ditambahkan!</div>');
-			redirect('itemmenu');
+			redirect('itemMenu');
 		}
 	
 	}
@@ -73,7 +73,7 @@ class ItemMenu extends CI_Controller {
 		{
 			if(!$data['oneitem']){
 				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Data Item Tidak Ditemukan!</div>');
-				redirect('itemmenu');
+				redirect('itemMenu');
 			} else {
 				$this->load->view("templates/header",$data);
 				$this->load->view("templates/sidebar",$data);
@@ -118,10 +118,10 @@ class ItemMenu extends CI_Controller {
 
 			if($this->db->affected_rows() > 0){
 				$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Update Item Sukses!</div>');
-				redirect('itemmenu/edit/'.$this->input->post('item_id'));
+				redirect('itemMenu/edit/'.$this->input->post('item_id'));
 			} else {
 				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Update Item Gagal! Silahkan Coba Lagi!</div>');
-				redirect('itemmenu/edit/'.$this->input->post('item_id'));
+				redirect('itemMenu/edit/'.$this->input->post('item_id'));
 			}
 		}
 	}
@@ -134,10 +134,10 @@ class ItemMenu extends CI_Controller {
 		if($this->db->affected_rows() > 0){
 			unlink('./assets/img/upload/items/'.$this->input->post('gambar'));
 			$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Item Berhasil Dihapus!</div>');
-			redirect('itemmenu');
+			redirect('itemMenu');
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Hapus Item Baru Gagal! Silahkan Coba Lagi!</div>');
-			redirect('itemmenu');
+			redirect('itemMenu');
 		}
 	}
 

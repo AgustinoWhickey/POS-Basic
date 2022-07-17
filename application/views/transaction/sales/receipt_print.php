@@ -43,8 +43,10 @@
 <body onload="window.print()">
     <div class="content">
         <div class="title">
-            <b>The Tea</b>
-            <br><img src="<?= base_url('assets/img/favicon.png') ?>" style="width:20%;">
+            <br><img src="<?= base_url('assets/img/nikmatea.png') ?>" style="width:20%;">
+            <p>Nikmatea Pondok Cabe</p>
+            <p>Jl. Cabe V RT.002/RW.05, Pd. Cabe Ilir, Kec. Pamulang, Kota Tangerang Selatan, Banten 15418</p>
+            <p>0857-1451-7797</p>
         </div>
         <div class="head">
             <table cellspacing="0" cellpadding="0">
@@ -132,9 +134,10 @@
             </table>
         </div>
         <div class="thanks">
-            Thank you for your visit <br>
-            <br><img src="<?= base_url('assets/img/qrcode.jpg') ?>" style="width:20%;">
-            <br>thetea.co.id
+            -- Selamat MeNikmatea -- <br>
+            <br>Info Kemitraan dll: 
+            <br>0812-5757-6708
+            <br>www.nikmateagroup.com
         </div>
     </div>
 </body>

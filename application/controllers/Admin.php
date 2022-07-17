@@ -22,11 +22,6 @@ class Admin extends CI_Controller {
 				ORDER BY sold DESC");
 		$result = $query->result();
 
-		// echo "<pre>";
-		// print_r($result);
-		// echo "</pre>";
-		// exit;
-
 		$query2 = $this->db->query("SELECT SUM(unit_qty * unit_price) AS outcome FROM stock_item");
 		$result2 = $query2->result();
 

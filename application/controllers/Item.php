@@ -195,8 +195,15 @@ class Item extends CI_Controller {
 				$quantity = 'qty'.$i;
 
 				if($this->input->post($bahan) != ''){
-					$databahan = [
+					$dataupdate = [
 						'id' => (int)$this->input->post($id),
+						'product_id' => (int)$this->input->post('item_id'),
+						'item_id' => (int)$this->input->post($bahan),
+						'qty' => (int)$this->input->post($quantity),
+						'updated' => time()
+					];
+
+					$databaru = [
 						'product_id' => (int)$this->input->post('item_id'),
 						'item_id' => (int)$this->input->post($bahan),
 						'qty' => (int)$this->input->post($quantity),
@@ -207,9 +214,9 @@ class Item extends CI_Controller {
 				$cek = $this->item_menu_m->getMenuItem((int)$this->input->post('item_id'), (int)$this->input->post($bahan));
 
 				if($cek){
-					$this->item_menu_m->updatemenuitem($databahan);
+					$this->item_menu_m->updatemenuitem($dataupdate);
 				} else {
-					$this->db->insert('menu_item', $databahan);
+					$this->db->insert('menu_item', $databaru);
 				}
 					
 			}

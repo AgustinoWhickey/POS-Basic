@@ -47,8 +47,8 @@
     						<td><?= $it->unit; ?></td>
     						<td><img src=<?= base_url('assets/img/upload/items/'.$it->image) ?> class="img" style="width:100px"></td>
     						<td>
-                    <a href="<?= base_url('itemmenu/edit/'.$it->id); ?>" class="btn btn-xs btn-info">Edit</a>
-                    <form action="<?= site_url('itemmenu/delete')?>" method="post">
+                    <a href="<?= base_url('itemMenu/edit/'.$it->id); ?>" class="btn btn-xs btn-info">Edit</a>
+                    <form action="<?= site_url('itemMenu/delete')?>" method="post">
                       <input type="hidden" name="itemmenu_id" value="<?= $it->id?>">
                       <button type="submit" onclick="return confirm('Apakah Anda yakin?')" class="btn btn-xs btn-danger">Delete</button>
                     </form>
@@ -76,7 +76,7 @@
 					<span aria-hidden="true"></span>
 				</button>
 			</div>
-			<form action="<?= base_url('itemmenu'); ?>" method="post" enctype="multipart/form-data">
+			<form action="<?= base_url('itemMenu'); ?>" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
 					<div class="form-group">
             <label>Nama Item: </label>
@@ -106,3 +106,9 @@
 		</div>
 	</div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#table1').DataTable();
+  });
+</script>

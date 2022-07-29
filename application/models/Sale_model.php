@@ -111,14 +111,14 @@ class Sale_model extends CI_Model
     {
         $params = array(
             'invoice' => $this->getInvoice(),
-            'total_price' => $data['subtotal'],
+            'total_price' => $data['grandtotal'],
             'discount' => $data['discount'],
-            'final_price' => $data['grandtotal'],
+            'final_price' => ((int)$data['grandtotal'] - (int)$data['discount']),
             'cash' => $data['cash'],
             'remaining' => $data['change'],
             'note' => $data['note'],
             'user_id' => $this->session->userdata('user_id'),
-            'date' => strtotime($data['date']),
+            'date' => time(),
             'created' => time(),
         );
 

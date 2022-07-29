@@ -12,6 +12,7 @@ class Sale extends CI_Controller {
 		$this->load->model('Login_model','login_m');
         $this->load->model('Sale_model','sale_m');
         $this->load->model('Stock_model','stock_m');
+		$this->load->model('Category_model','category_m');
 		is_logged_in();
 	}
 
@@ -21,12 +22,13 @@ class Sale extends CI_Controller {
 		$data['items'] 		= $this->item_m->getItems();
 		$data['invoice'] 	= $this->sale_m->getInvoice();
 		$data['cart'] 		= $this->sale_m->getCart();
-		$data['title'] 		= 'Data Penjualan';
+		$data['category'] 	= $this->category_m->getCategories();
+		$data['title'] 		= 'Transaksi Penjualan';
 
 		$this->load->view("templates/header",$data);
 		$this->load->view("templates/sidebar",$data);
 		$this->load->view("templates/topbar",$data);
-		$this->load->view("transaction/sales/index",$data);
+		$this->load->view("transaction/sales/index_",$data);
 		$this->load->view("templates/footer");
 	
 	}

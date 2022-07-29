@@ -14,6 +14,33 @@ class Item extends CI_Controller {
 		is_logged_in();
 	}
 
+	function get_product_by_category() {
+		if(isset($_POST['idcat'])){
+			$items = $this->item_m->getItemByCategory($_POST['idcat']);
+		} else {
+			$items = $this->item_m->getItems();
+		}
+		$html = '';
+
+		foreach($items as $item){
+			$html .= '<div class="col mb-5">
+						<a href="#" id="item" iditem="'.$item->id.'" stock="'.$item->stock.'" product="'.$item->name.'" price="'.$item->price.'">
+						<div class="card h-100">
+							<img class="card-img-top" src="'.base_url('assets/img/upload/products/'.$item->image).'" alt="..." />
+							<div class="card-body p-4">
+								<div class="text-center">
+									<h5 class="fw-bolder">'.$item->name.'</h5>
+									'.indo_currency($item->price).'
+								</div>
+							</div>
+						</div>
+						</a>
+					</div>';
+		}
+
+		echo $html;
+	}
+
 	function get_ajax() {
         $list = $this->item_m->get_datatables();
         $data = array();

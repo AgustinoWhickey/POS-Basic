@@ -83,6 +83,14 @@ class Product_Item_model extends CI_Model
         return $aksi;
     }
 
+    public function getItemByCategory($idcat)
+    {
+        $this->db->select('*');
+        $this->db->where('category_id', $idcat);
+        $aksi = $this->db->get('product_item')->result();
+        return $aksi;
+    }
+
     public function updateitem($data)
 	{
 		$this->db->update('product_item', $data, ['id' => $data['id']]);

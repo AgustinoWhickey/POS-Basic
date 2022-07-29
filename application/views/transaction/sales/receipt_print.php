@@ -44,9 +44,11 @@
     <div class="content">
         <div class="title">
             <br><img src="<?= base_url('assets/img/nikmatea.png') ?>" style="width:20%;">
-            <p>Nikmatea Pondok Cabe</p>
-            <p>Jl. Cabe V RT.002/RW.05, Pd. Cabe Ilir, Kec. Pamulang, Kota Tangerang Selatan, Banten 15418</p>
-            <p>0857-1451-7797</p>
+            <div class="thanks">
+            <br>Nikmatea Pondok Cabe
+            <br>Jl. Cabe V RT.002/RW.05, Pd. Cabe Ilir, Kec. Pamulang, Kota Tangerang Selatan, Banten 15418
+            <br>0857-1451-7797
+            </div>
         </div>
         <div class="head">
             <table cellspacing="0" cellpadding="0">

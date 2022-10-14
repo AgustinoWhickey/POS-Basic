@@ -32,6 +32,7 @@
                 <th>Nama</th>
                 <th>Stock</th>
                 <th>Unit</th>
+                <th>Harga Per Unit</th>
                 <th>Gambar</th>
                 <th>Aksi</th>
             </thead>
@@ -45,6 +46,7 @@
     						<td><?= $it->name; ?></td>
                 <td><?= $it->stock; ?></td>
     						<td><?= $it->unit; ?></td>
+    						<td><?= indo_currency($it->unit_price); ?></td>
     						<td><img src=<?= base_url('assets/img/upload/items/'.$it->image) ?> class="img" style="width:100px"></td>
     						<td>
                     <a href="<?= base_url('itemMenu/edit/'.$it->id); ?>" class="btn btn-xs btn-info">Edit</a>
@@ -85,6 +87,10 @@
           <div class="form-group">
             <label>Unit: </label>
 						<input type="text" class="form-control" id="unit" name="unit" placeholder="Input Unit">
+					</div>
+          <div class="form-group">
+            <label>Harga Per Unit: </label>
+						<input type="text" class="form-control" id="unit_price" name="unit_price" placeholder="Input Harga">
 					</div>
           <div class="form-group">
             <label>Stock: </label>

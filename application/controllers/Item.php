@@ -77,7 +77,7 @@ class Item extends CI_Controller {
 	
 	public function index()
 	{
-		$data['title'] 		= 'Product Item Management';
+		$data['title'] 		= 'Product Item Manajemen';
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['items'] 		= $this->item_m->getItems();
 		$data['unititems'] 	= $this->unit_item_m->getItems();

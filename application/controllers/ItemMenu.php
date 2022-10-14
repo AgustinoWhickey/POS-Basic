@@ -15,7 +15,7 @@ class ItemMenu extends CI_Controller {
 	
 	public function index()
 	{
-		$data['title'] 		= 'Item Management';
+		$data['title'] 		= 'Item Manajemen';
 		$data['user'] 		= $this->login_m->ceklogin($this->session->userdata('email'));
 		$data['items'] 		= $this->item_m->getItems();
 
@@ -50,6 +50,7 @@ class ItemMenu extends CI_Controller {
 			$data = [
 				'name' => htmlspecialchars($this->input->post('name',true)),
 				'unit' => htmlspecialchars($this->input->post('unit',true)),
+				'unit_price' => htmlspecialchars($this->input->post('unit_price',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
 				'image' => $image,
 				'created' => time()
@@ -109,6 +110,7 @@ class ItemMenu extends CI_Controller {
 				'id' => $this->input->post('item_id'),
 				'name' => htmlspecialchars($this->input->post('nama',true)),
 				'unit' => htmlspecialchars($this->input->post('unit',true)),
+				'unit_price' => htmlspecialchars($this->input->post('unit_price',true)),
 				'stock' => htmlspecialchars($this->input->post('stock',true)),
 				'image' => $image,
 				'updated' => time()

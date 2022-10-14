@@ -301,7 +301,7 @@
 
         $(document).on('click', '#process_payment', function(){
           var discount = $('#diskon').val();
-          var grandtotal = $('#grand_total').val();
+          var grandtotal = $('#inputtotal').val();
           var cash = $('#cash').val();
           var change = $('#change').val();
           var note = $('#note').val();
@@ -315,28 +315,7 @@
                 dataType: 'json',
                 success: function(result){
                   if(result == 1){
-                    if(cash < 1){
-                      alert('Jumlah uang cash belum diinput');
-                    } else {
-                      if(confirm('Yakin proses transaksi ini?')){
-                        $.ajax({
-                          type: 'POST',
-                          url: '<?= site_url('sale/process_payment')?>',
-                          data: {'discount': discount, 'grandtotal': grandtotal, 'cash':cash, 'change': change, 'note':note},
-                          dataType: 'json',
-                          success: function(result){
-                            if(result != null || result != ''){
-                              console.log(result);
-                              alert('Transaksi Berhasil!');
-                              window.open('<?= site_url('sale/cetak/')?>' + result, '_blank');
-                            } else {
-                              alert('Transaksi Gagal!');
-                            }
-                            location.href='<?= site_url('sale') ?>';
-                          }
-                        });
-                      }
-                    }
+                    console.log(result);
                   }else {
                     alert('Tambah cart gagal');
                   }
@@ -344,6 +323,29 @@
               });
             }
           });
+
+          if(cash < 1){
+            alert('Jumlah uang cash belum diinput');
+          } else {
+            if(confirm('Yakin proses transaksi ini?')){
+              $.ajax({
+                type: 'POST',
+                url: '<?= site_url('sale/process_payment')?>',
+                data: {'discount': discount, 'grandtotal': grandtotal, 'cash':cash, 'change': change, 'note':note},
+                dataType: 'json',
+                success: function(result){
+                  if(result != null || result != ''){
+                    console.log(result);
+                    alert('Transaksi Berhasil!');
+                    window.open('<?= site_url('sale/cetak/')?>' + result, '_blank');
+                  } else {
+                    alert('Transaksi Gagal!');
+                  }
+                  location.href='<?= site_url('sale') ?>';
+                }
+              });
+            }
+          }
         });
     });
 </script>

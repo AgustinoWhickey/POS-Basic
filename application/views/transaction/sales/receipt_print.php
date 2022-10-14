@@ -5,12 +5,12 @@
             .content{
                 font-family: 'Verdana';
                 width: 40mm;
-                font-size: 10px;
+                font-size: 8px;
                 padding: 5px;
             }
             .title{
                 text-align: center;
-                font-size: 13px;
+                font-size: 8px;
                 padding-bottom: 5px;
                 border-bottom: 1px dashed;
             }
@@ -23,7 +23,7 @@
             table{
                 font-family: 'Verdana';
                 width: 100%;
-                font-size: 10px;
+                font-size: 8px;
             }
             .thanks{
                 margin-top: 10px;
@@ -33,7 +33,7 @@
             }
             @media print{
                 @page{
-                    width: 80mm;
+                    width: 58mm;
                     margin: 0mm;
                 }
             }

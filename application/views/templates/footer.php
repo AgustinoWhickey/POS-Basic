@@ -83,9 +83,9 @@
             "buttons": [
               {
                 extend: 'print',
-                customize: function ( win ) {
-                    $(win.document.body)
-                        .css( 'font-size', '10pt' )
+                footer: true,
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5 ]
                 }
               }
             ],
@@ -119,7 +119,6 @@
     
                 // Update footer
                 $( api.column( 5 ).footer() ).html(
-                    // 'Total Pembayaran: '+pageTotal +' ( $'+ total +' total)'
                     'Total Pembayaran: Rp. '+total
                 );
             }
